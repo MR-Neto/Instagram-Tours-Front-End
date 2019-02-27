@@ -1,68 +1,151 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Instagram Tours
 
-## Available Scripts
+## Description
+Instagram tours is an app to book tours in Barcelona. The front-end is built with React and Semantic UI React, while the back-end will use express.js and node.js.
 
-In the project directory, you can run:
+## User Stories
 
-### `npm start`
+-  **404:** As a user I want to see a nice 404 page when I go to a page that doesn’t exist so that I know it was my fault.
+-  **500:** As a user I want to see a nice error page when the super team screws it up so that I know that is not my fault.
+-  **Homepage:** As a user I want to understand the product in the landing page and be able to start the booking process. Logged user has access to profile and booked tours. New user can log in.
+-  **Signup:** As a user I want to be able to sign up.
+-  **Login:** As a new user I want to be able to log in.
+-  **Logout:** As a user I can logout from the application so no one else can use it
+-  **See Profile** As a user I will be able to see profile.
+-  **Edit Profile** As a user I will be able to edit profile.
+-  **Book Tour** As a user I will be able select a day for a tour and book places. 
+-  **Booked Tours** As a user I will be able to see the tours I have booked in the past. 
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Backlog
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+Buying experience:
+- Customize Tour (pick your route)
+- Customize Tour (add extras)
+- Formik
+- Confirmation Email
 
-### `npm test`
+APIs:
+- Stripe API
+- Google Maps (with pictures for each location and routes)
+- Authentication with Facebook
+- Weather forecasts
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Profile:
+- See who is going with you on the tour
 
-### `npm run build`
+Admin:
+- Dashboard for admin
+- Check tours
+- Edit Places
+- Contact customers
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+## Routes Front-End
+| Path | Component | Permissions | Behavior | 
+|------|--------|--| -------|
+| `/` | HomePage | public | <li>Explain Tours <li>Call to Action |
+| `/book` | Booking | public | <li>Select Date <li> Select number of persons <li>Continue |
+| `/book/confirm` | ShoppingCart | public | <li>Display selected date, number of persons, and price <li> Confirm |
+| `/auth/login` | FormUser | public (private to logged users)  | <li>Display  inputs for username and password <li>Log in button <li>Link to Sign Up |
+| `/auth/signup` | FormUser | public (private to logged users)  | <li>Display  inputs for username, password, name, contact <li>Create button <li> Created user will be logged in |
+| `/profile` | FormUser | private | <li>Edit your profile|
+| `/profile/bookedtours` | BookedTours | private | <li> List booked tours|
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Components
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+- Navbar Component
+- Homepage Component
+- Booking Component
+  - Calendar Component
+    - Output: Date
+  - Output: Date,{ owner, quantity } , Array Places
+- ShoppingCart Component
+  - Input: Date,{ owner, quantity } , Array Places
+- FormUser Component
+- OrderHistory Component
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## Services
 
-## Learn More
+- Auth Service
+  - auth.login(user)
+  - auth.signup(user)
+  - auth.logout()
+  - auth.me()
+  - auth.getUser() // synchronous
+- Tour Service
+  - tour.listAll()
+  - tour.book({date, { owner, quantity }, array places})
+  - tour.bookedToursByUser(user_id)  
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+# Server
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Routes Back-End
+| Method | Path | Behavior | Body |
+|--------|------| ---------|------|
+| `get`  | `/auth/me` | <li>404 if no user in session <li> 200 with user object | |
+| `post`  | `/auth/signup` | <li> Validation: user already logged in (401) <li> Validation: empty fields (422) <li> Validation: user already taken (409) <li> Create user with encrypted password <li> store user in session <li> Return 201 with user object |  <li> username <li> password <li> name <li> phoneNumber |
+| `post`  | `/auth/login` | <li> Validation: user already logged in (401) <li> Validation: empty fields (422) <li> Validation: user doesn't exist (404) <li> Validation: password matches (404) <li> store user in session <li> Return 200 with user object | <li> username <li> password|
+| `post`  | `/auth/logout` | <li> Destroy session <li> Return 204 | |
+| `get`  | `/api/tours` | <li> Return 200 with array of tours | |
+| `post`  | `/api/book` | <li> Validation: Exists tour for date <li> Validation: Free spots <li> Create or update tour <li> Return 200 with tour | <li> Date <li> Array Users <li> Array Places |
+| `get`  | `/api/bookedtours/:id` | <li> Validation: User id exists <li> 200 with array of tours booked | |
 
-### Code Splitting
+## Models
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+### User model
 
-### Analyzing the Bundle Size
+```
+user = {
+  username - String // required & unique
+  password - String // required
+  name - String // required
+  phoneNumber - String // required
+}
+```
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+### Tour model
+```
+tour = {
+  date - Date // required
+  users - [ {
+    owner:ObjectID<User>,
+    quantity: number
+   },
+  ... ]
+  places - [ ObjectID<Place>, ... ]
+  price - Number
+}
+```
 
-### Making a Progressive Web App
+### Place model
+```
+place = {
+  name - String // required
+  coordenates - GeoJSON
+  imgUrl - String
+}
+```
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+# Links
 
-### Advanced Configuration
+### Trello/Kanban
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+[Link to your trello board](https://trello.com) or picture of your physical board
 
-### Deployment
+### Git
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
+The url to your repository and to your deployed project
 
-### `npm run build` fails to minify
+[Client repository Link](http://github.com)
+[Server repository Link](http://github.com)
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+[Deploy Link](http://heroku.com)
+
+### Slides
+
+The url to your presentation slides
+
+[Slides Link](http://slides.com)
