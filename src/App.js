@@ -7,6 +7,9 @@ import Private from './pages/Private';
 import Signup from './pages/Signup';
 import Login from './pages/Login';
 import AuthProvider from './components/AuthProvider';
+import Form from './components/Form';
+import Booking from './components/Booking';
+import Cart from './components/Cart';
 
 
 class App extends Component {
@@ -16,6 +19,7 @@ class App extends Component {
         <div className="container">
           <h1>Basic React Authentication</h1>
           <Navbar data='data' />
+          <Cart />
           <Switch>
             <AnonRoute path="/signup" component={Signup} />
             <AnonRoute path="/login" component={Login} />
