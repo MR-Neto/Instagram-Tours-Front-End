@@ -7,6 +7,9 @@ import OrderHistory from './pages/OrderHistory';
 import Signup from './pages/Signup';
 import Login from './pages/Login';
 import AuthProvider from './components/AuthProvider';
+import Form from './components/Form';
+import Booking from './components/Booking';
+import Cart from './components/Cart';
 
 
 class App extends Component {
@@ -14,6 +17,12 @@ class App extends Component {
     return (
       <AuthProvider>
         <div className="container">
+<<<<<<< HEAD
+=======
+          <h1>Basic React Authentication</h1>
+          <Navbar data='data' />
+          <Cart />
+>>>>>>> 29eef31d86e8c538caacfc462de03012beed7ddb
           <Switch>
             <AnonRoute path="/auth/signup" component={Signup} />
             <AnonRoute path="/auth/login" component={Login} />
