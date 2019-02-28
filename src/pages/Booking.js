@@ -1,9 +1,14 @@
 import React, { Component } from 'react'
+import Navbar from '../components/Navbar';
+import { withAuth } from '../components/AuthProvider';
+
+
 
 class Booking extends Component {
   render() {
     return (
       <div>
+        <Navbar />
         <input type="date" name="calendar" />
         <h2>Pick 5 locations</h2>
         <div>
@@ -22,4 +27,4 @@ class Booking extends Component {
   }
 }
 
-export default Booking;
+export default withAuth(Booking);

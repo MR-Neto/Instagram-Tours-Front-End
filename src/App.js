@@ -1,33 +1,31 @@
 import React, { Component } from 'react';
 import {Switch} from 'react-router-dom'
+import AuthProvider from './components/AuthProvider';
 import PrivateRoute from './components/PrivateRoute';
 import AnonRoute from './components/AnonRoute';
-import Homepage from './pages/Homepage';
-import OrderHistory from './pages/OrderHistory';
-import Signup from './pages/Signup';
-import Login from './pages/Login';
-import AuthProvider from './components/AuthProvider';
-import Form from './components/Form';
-import Booking from './components/Booking';
-import Cart from './components/Cart';
+import Home from './pages/Home';
+import Form from './pages/Form';
+import Booking from './pages/Booking';
+import Cart from './pages/Cart';
+import Profile from './pages/Profile';
 
 
 class App extends Component {
+  state={
+
+  }
+
   render() {
     return (
       <AuthProvider>
         <div className="container">
-<<<<<<< HEAD
-=======
-          <h1>Basic React Authentication</h1>
-          <Navbar data='data' />
-          <Cart />
->>>>>>> 29eef31d86e8c538caacfc462de03012beed7ddb
           <Switch>
-            <AnonRoute path="/auth/signup" component={Signup} />
-            <AnonRoute path="/auth/login" component={Login} />
-            <AnonRoute path="/" component={Homepage} />
-            <PrivateRoute path="/profile/bookedtours" component={OrderHistory} />
+            <AnonRoute path="/auth/signup" component={Form} />
+            <AnonRoute path="/auth/login" component={Form} />
+            <AnonRoute path="/book" component={Booking} />
+            <AnonRoute path="/book/confirm" component={Cart} />
+            <AnonRoute path="/" component={Home} />
+            <PrivateRoute path="/profile" component={Profile} />
           </Switch>
         </div>
       </AuthProvider>

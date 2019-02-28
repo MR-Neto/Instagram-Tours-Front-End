@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
+import { withAuth } from '../components/AuthProvider';
 
 
-export default class Homepage extends Component {
+class Home extends Component {
   render() {
     return (
       <div>
@@ -33,3 +34,5 @@ export default class Homepage extends Component {
     )
   }
 }
+
+export default withAuth(Home);

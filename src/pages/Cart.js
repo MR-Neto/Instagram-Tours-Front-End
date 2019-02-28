@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { withAuth } from '../components/AuthProvider';
 
 class Cart extends Component {
   render() {
@@ -20,4 +21,4 @@ class Cart extends Component {
   }
 }
 
-export default Cart;
+export default withAuth(Cart);
