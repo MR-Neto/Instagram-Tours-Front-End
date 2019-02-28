@@ -4,20 +4,29 @@ import { withAuth } from '../components/AuthProvider';
 
 class Navbar extends Component {
   render() {
-    const { isLogged, user, logout } = this.props;
-    const { username } = user;
+    const { isLogged, logout } = this.props;
+
     if (isLogged) {
-      return <div>
-        <p>username: { username }</p>
-        <p onClick={logout}>Logout</p>
-      </div>
+      return (
+        <nav>
+          <button>Back</button>
+          <h1>Tours</h1>
+          <a href="#" onClick={logout}>Menu</a>
+          <a href="#" onClick={logout}>Logout</a>
+        </nav>
+      );
     } else {
-      return <div>
-        <Link to='/login'>Login</Link>
-        <Link to='/signup'>Signup</Link>
-      </div>
+      return (
+        <nav>
+          <button>Back</button>
+          <h1>Tours</h1>
+          <a href="#" onClick={logout}>Menu</a>
+          <Link to="/book">Book tour</Link>
+          <Link to="/auth/login">Log In</Link>
+          <Link to="/auth/signup">Sign Up</Link>
+        </nav>
+      );
     }
-  
   }
 }
 
