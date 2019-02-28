@@ -90,8 +90,8 @@ Admin:
 | `post`  | `/auth/login` | <li> Validation: user already logged in (401) <li> Validation: empty fields (422) <li> Validation: user doesn't exist (404) <li> Validation: password matches (404) <li> store user in session <li> Return 200 with user object | <li> username <li> password|
 | `post`  | `/auth/logout` | <li> Destroy session <li> Return 204 | |
 | `get`  | `/api/tours` | <li> Return 200 with array of tours | |
-| `post`  | `/api/book` | <li> Validation: Exists tour for date <li> Validation: Free spots <li> Create or update tour <li> Return 200 with tour | <li> Date <li> Array Users <li> Array Places |
-| `get`  | `/api/bookedtours/:id` | <li> Validation: User id exists <li> 200 with array of tours booked | |
+| `post`  | `/api/book` | <li> Validation: Exists tour for date <li> Validation: Free spots <li> Return 401 and found tour if tour full <li> Create or update tour <li> Return 200 with tour | <li> date: Date <li>user: Object with owner and numberPeople <li>places: Array Places |
+| `get`  | `/api/:id/bookedtours` | <li> Validation: User id exists <li> 404 when user doesn't exist  <li> 200 with array of tours booked <li> 204 with no tours found| |
 
 ## Models
 
@@ -111,10 +111,10 @@ user = {
 tour = {
   date - Date // required
   users - [ {
-    owner:ObjectID<User>,
-    quantity: number
+    buyer:ObjectID<User>,
+    numberOfTickets: number
    },
-  ... ]
+  ... ] // required
   places - [ ObjectID<Place>, ... ]
   price - Number
 }
@@ -124,8 +124,8 @@ tour = {
 ```
 place = {
   name - String // required
-  coordenates - GeoJSON
-  imgUrl - String
+  coordinates - GeoJSON
+  imgUrl - [ String, ...]
 }
 ```
 
