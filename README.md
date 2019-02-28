@@ -76,9 +76,9 @@ Admin:
   - auth.me()
   - auth.getUser() // synchronous
 - Tour Service
-  - tour.listAll()
-  - tour.book({date, { owner, quantity }, array places})
-  - tour.bookedToursByUser(user_id)  
+  - tour.getAllTours()
+  - tour.makeBooking({date, user, places})
+  - tour.getBookedToursByUser(userId)  
 
 # Server
 
