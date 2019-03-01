@@ -29,7 +29,7 @@ class Booking extends Component {
         <div>
           <label htmlFor="number-of-people">No of people</label>
           <input type="number" name="numberOfTickets" value={numberOfTickets} onChange={this.handleChangeInput} />
-          <p>Price: 25 €</p>
+          <p>Price: {25*numberOfTickets} €</p>
           <Link to="/book/confirm">Confirm</Link>
         </div>
       </div>
