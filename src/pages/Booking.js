@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
+import { List } from 'semantic-ui-react';
 import Navbar from '../components/Navbar';
 import { withAuth } from '../components/AuthProvider';
 import bookingService from '../lib/bookingService';
+import tourService from '../lib/tourService';
 
 class Booking extends Component {
 
@@ -9,6 +11,7 @@ class Booking extends Component {
     date: bookingService.date,
     numberOfTickets: bookingService.numberOfTickets,
     placesPicked: bookingService.placesPicked,
+    tours: [],
   }
 
   handleChangeInput = (e) => {
@@ -20,6 +23,30 @@ class Booking extends Component {
 
   updateStageHandler = () => {
     this.props.updateStage(1, this.state);
+  }
+
+  renderAllTours() {
+    return this.state.tours.map((tour) => {
+      return (
+          <List.Item>
+            <List.Icon name='camera retro' size='large' verticalAlign='middle' />
+            <List.Content>
+              <List.Header as='a'>{tour.date}</List.Header>
+              <List.Description as='a'>{tour.price}</List.Description>
+            </List.Content>
+          </List.Item>
+      );
+    });
+  }
+
+  componentDidMount() {
+    tourService.getAllTours()
+      .then((tours) => {
+        this.setState({
+          tours,
+        });
+      })
+      .catch(error => console.log(error));
   }
 
   render() {
@@ -41,6 +68,9 @@ class Booking extends Component {
           <p>Price: {25*numberOfTickets} €</p>
           <button onClick={this.updateStageHandler}>Confirm</button>
         </div>
+        <List divided relaxed>
+          {this.renderAllTours()}
+        </List>
       </div>
     )
   }
