@@ -20,22 +20,17 @@ class App extends Component {
   }
 
   componentDidMount(){
-    console.log("did mount");
-
     placesService.getAllPlaces()
     .then((placesList)=>{
-      console.log("placeslist",placesList);
       this.setState({
         placesList
       });
     });
   }
   
-  updateCart = (date, places, numberOfTickets) => {
+  updateCart = (name, value) => {
     this.setState({
-      date,
-      places,
-      numberOfTickets
+      [name]:value
     });
   }
 
@@ -46,8 +41,8 @@ class App extends Component {
           <Switch>
             <AnonRoute path="/auth/signup" component={Form} />
             <AnonRoute path="/auth/login" component={Form} />
-            <AnonRoute path="/book" component={Booking} updateCart={this.updateCart} placesList={this.state.placesList} />
-            <AnonRoute path="/book/confirm" component={Cart} />
+            <AnonRoute path="/book/confirm" component={Cart} AppState = {this.state} />
+            <AnonRoute path="/book" component={Booking} updateCart={this.updateCart} AppState = {this.state} />
             <AnonRoute path="/" component={Home} />
             <PrivateRoute path="/profile" component={Profile} />
           </Switch>

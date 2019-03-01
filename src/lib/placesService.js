@@ -9,16 +9,10 @@ class PlacesService {
   }
 
   getAllPlaces() {
-    console.log("places");
-
     return this.api.get('/places')
       .then(({ data }) => {
-        console.log("got data");
         return data;
       })
-      .catch((err) => {
-        console.log(err);
-      });
   }
 }
 

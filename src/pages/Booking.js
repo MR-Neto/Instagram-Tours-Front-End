@@ -1,18 +1,25 @@
 import React, { Component } from 'react'
 import Navbar from '../components/Navbar';
 import { withAuth } from '../components/AuthProvider';
+import { Link } from 'react-router-dom';
 
 
 
 class Booking extends Component {
-  
 
+  handleChangeInput = (e) => {
+    const { name, value } = e.target;
+    this.props.updateCart(name, value)
+  }
 
   render() {
+
+    const { date, numberOfTickets, places } = this.props.AppState;
+
     return (
       <div>
         <Navbar />
-        <input type="date" name="calendar" value={this.props.date} onChange={this.handleChangeInput}/>
+        <input type="date" name="date" value={date} onChange={this.handleChangeInput} />
         <h2>Pick 5 locations</h2>
         <div>
           <img src="http://lorempixel.com/400/200/city/" alt="places"></img>
@@ -21,9 +28,9 @@ class Booking extends Component {
         </div>
         <div>
           <label htmlFor="number-of-people">No of people</label>
-          <input type="number" name="numberOfTickets" value={this.props.numberOfTickets} onChange={this.handleChangeInput}/>
+          <input type="number" name="numberOfTickets" value={numberOfTickets} onChange={this.handleChangeInput} />
           <p>Price: 25 €</p>
-          <button type="submit">Confirm</button>
+          <Link to="/book/confirm">Confirm</Link>
         </div>
       </div>
     )
