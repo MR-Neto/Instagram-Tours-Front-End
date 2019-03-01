@@ -2,19 +2,29 @@ import React, { Component } from 'react'
 import Navbar from '../components/Navbar';
 import { withAuth } from '../components/AuthProvider';
 import { Link } from 'react-router-dom';
-
-
+import bookingService from '../lib/bookingService';
 
 class Booking extends Component {
 
+  state = {
+    date: bookingService.date,
+    numberOfTickets: bookingService.numberOfTickets,
+    placesPicked: bookingService.placesPicked,
+  }
+
   handleChangeInput = (e) => {
     const { name, value } = e.target;
-    this.props.updateCart(name, value)
+    this.setState({
+      [name]: value,
+    });
+  }
+
+  updateStageHandler = () => {
+    this.props.updateStage(1, this.state);
   }
 
   render() {
-
-    const { date, numberOfTickets, places } = this.props.AppState;
+    const { date, numberOfTickets, placesPicked } = this.state;
 
     return (
       <div>
@@ -30,7 +40,7 @@ class Booking extends Component {
           <label htmlFor="number-of-people">No of people</label>
           <input type="number" name="numberOfTickets" value={numberOfTickets} onChange={this.handleChangeInput} />
           <p>Price: {25*numberOfTickets} €</p>
-          <Link to="/book/confirm">Confirm</Link>
+          <button onClick={this.updateStageHandler}>Confirm</button>
         </div>
       </div>
     )

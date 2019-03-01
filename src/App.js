@@ -5,17 +5,12 @@ import PrivateRoute from './components/PrivateRoute';
 import AnonRoute from './components/AnonRoute';
 import Home from './pages/Home';
 import Form from './pages/Form';
-import Booking from './pages/Booking';
-import Cart from './pages/Cart';
 import Profile from './pages/Profile';
+import BookingController from './pages/BookingController';
 import placesService from './lib/placesService';
-
 
 class App extends Component {
   state = {
-    date: "",
-    placesPicked: [],
-    numberOfTickets: 0,
     placesList:[]
   }
 
@@ -28,12 +23,7 @@ class App extends Component {
     });
   }
   
-  updateCart = (name, value) => {
-    this.setState({
-      [name]:value
-    });
-  }
-
+ 
   render() {
     return (
       <AuthProvider>
@@ -41,8 +31,7 @@ class App extends Component {
           <Switch>
             <AnonRoute path="/auth/signup" component={Form} />
             <AnonRoute path="/auth/login" component={Form} />
-            <AnonRoute path="/book/confirm" component={Cart} AppState = {this.state} />
-            <AnonRoute path="/book" component={Booking} updateCart={this.updateCart} AppState = {this.state} />
+            <AnonRoute path="/book" component={BookingController} AppState = {this.state} />
             <AnonRoute path="/" component={Home} />
             <PrivateRoute path="/profile" component={Profile} />
           </Switch>
