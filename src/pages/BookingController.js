@@ -6,13 +6,11 @@ import bookingService from '../lib/bookingService';
 class BookingController extends Component {
 
   state = {
-    stage: 0,
+    stage: bookingService.stage,
   }
 
-  updateStage = (num, value) => {
-    if(value) {
-      bookingService.setValues(value);
-    }
+  updateStage = (value,num) => {
+    bookingService.setValues(value,num);
     this.setState({
       stage: num,
     });
@@ -20,6 +18,7 @@ class BookingController extends Component {
 
 
   render() {
+    console.log("STAGE",this.state.stage);
     return (
       <div>
         {this.state.stage === 0 && <Booking updateStage={this.updateStage} />}

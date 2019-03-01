@@ -10,8 +10,12 @@ class Booking extends Component {
   state = {
     date: bookingService.date,
     numberOfTickets: bookingService.numberOfTickets,
+<<<<<<< HEAD
     placesPicked: bookingService.placesPicked,
     tours: [],
+=======
+    placesPicked: bookingService.placesPicked
+>>>>>>> f5f0649c33798b3b23fad26a6b906f46c3f176b4
   }
 
   handleChangeInput = (e) => {
@@ -22,7 +26,7 @@ class Booking extends Component {
   }
 
   updateStageHandler = () => {
-    this.props.updateStage(1, this.state);
+    this.props.updateStage(this.state, 1);
   }
 
   renderAllTours() {
@@ -65,7 +69,7 @@ class Booking extends Component {
         <div>
           <label htmlFor="number-of-people">No of people</label>
           <input type="number" name="numberOfTickets" value={numberOfTickets} onChange={this.handleChangeInput} />
-          <p>Price: {25*numberOfTickets} €</p>
+          <p>Price: {25 * numberOfTickets} €</p>
           <button onClick={this.updateStageHandler}>Confirm</button>
         </div>
         <List divided relaxed>
