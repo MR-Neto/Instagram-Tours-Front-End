@@ -10,7 +10,7 @@ class Navbar extends Component {
         <div>
           <Dropdown.Divider />
           <Dropdown.Item>
-            <Link to="/auth/logout">Log Out</Link>
+            <button onClick={this.props.logout}>Log Out</button>
           </Dropdown.Item>
         </div>
       );

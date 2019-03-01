@@ -12,14 +12,22 @@ class Form extends Component {
 
   handleFormSubmit = event => {
     event.preventDefault();
-    const { username, password } = this.state;
-
-    this.props
-      .login({ username, password })
-      .then(() => {
-        this.props.history.push("/private");
-      })
-      .catch(error => console.log(error));
+    if(event.target.name === 'Sign Up') {
+      this.props
+        .signup(this.state)
+        .then(() => {
+          this.props.history.push('/  book');
+        })
+        .catch(error => console.log(error));
+    } else {
+      const { username, password } = this.state;
+      this.props
+        .login({ username, password })
+        .then(() => {
+          this.props.history.push("/book");
+        })
+        .catch(error => console.log(error));
+    }
   };
 
   handleChange = event => {
@@ -29,13 +37,15 @@ class Form extends Component {
 
   renderSignUp = () => {
     const { url } = this.props.match;
+    const { phoneNumber, name } = this.state;
+
     if (url === "/auth/signup") {
       return (
         <div>
-          <label htmlFor="full-name">Full Name</label>
-          <input type="text" name="full-name" />
-          <label htmlFor="contact">Phone</label>
-          <input type="number" name="contact" />
+          <label htmlFor="name">Full Name</label>
+          <input type="text" name="name" value={name} onChange={this.handleChange} />
+          <label htmlFor="phoneNumber">Phone</label>
+          <input type="number" name="phoneNumber" value={phoneNumber} onChange={this.handleChange} />
         </div>
       );
     }
@@ -44,18 +54,18 @@ class Form extends Component {
   renderSubmitButton = () => this.props.match.url === "/auth/signup" ? "Sign Up" : "Log In";
   
   render() {
-    const { url } = this.props.match;
+    const { username, password } = this.state;
 
     return (
       <div>
         <Navbar />
         <form>
           <label htmlFor="username">Username</label>
-          <input type="text" name="username" />
+          <input type="text" name="username" value={username} onChange={this.handleChange} />
           <label htmlFor="password">Password</label>
-          <input type="password" name="password" />
+          <input type="password" name="password" value={password} onChange={this.handleChange} />
           {this.renderSignUp()}
-          <button type="submit">{this.renderSubmitButton()}</button>
+          <button name ={this.renderSubmitButton()} onClick={this.handleFormSubmit}>{this.renderSubmitButton()}</button>
         </form>
       </div>
     );

@@ -31,9 +31,9 @@ class App extends Component {
           <Switch>
             <AnonRoute path="/auth/signup" component={Form} />
             <AnonRoute path="/auth/login" component={Form} />
+            <PrivateRoute path="/profile" component={Profile} />
             <Route path="/book" component={BookingController} AppState = {this.state} />
             <Route path="/" component={Home} />
-            <PrivateRoute path="/profile" component={Profile} />
           </Switch>
         </div>
       </AuthProvider>
