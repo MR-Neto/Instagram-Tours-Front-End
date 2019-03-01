@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { withAuth } from '../components/AuthProvider';
 import Navbar from '../components/Navbar';
 import bookingService from '../lib/bookingService';
+import tourService from '../lib/tourService';
 
 
 class Cart extends Component {
@@ -10,7 +11,18 @@ class Cart extends Component {
     this.props.updateStage(0)
   }
 
-  
+  makeBookingHandler = () => {
+    const { date, numberOfTickets, placesPicked } = bookingService;
+    const booking = {
+      date,
+      user: {
+        buyer: '5c7800f0fa2452180b66bd6d',
+        numberOfTickets,
+      },
+      places: placesPicked,
+    };
+    tourService.makeBooking(booking);
+  }
 
   render() {
     const { date, numberOfTickets, placesPicked } = bookingService;
@@ -28,7 +40,7 @@ class Cart extends Component {
         <p>Date: {date}</p>
         <p>People: {numberOfTickets}</p>
         <p>Price: 40 €</p>
-        <button>Book</button>
+        <button onClick={this.makeBookingHandler}>Book</button>
         <button>Book as guest</button>
       </div>
     )

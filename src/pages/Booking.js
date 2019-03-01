@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import Navbar from '../components/Navbar';
 import { withAuth } from '../components/AuthProvider';
-import { Link } from 'react-router-dom';
 import bookingService from '../lib/bookingService';
 
 class Booking extends Component {

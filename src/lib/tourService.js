@@ -13,8 +13,8 @@ class TourService {
       .then(({ data }) => data);
   }
 
-  makeBooking(date, user, places) {
-    return this.api.post('/book', { date, user, places })
+  makeBooking(booking) {
+    return this.api.post('/book', booking)
       .then(({ data }) => data);
   }
 
