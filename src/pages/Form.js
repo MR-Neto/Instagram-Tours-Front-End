@@ -4,6 +4,7 @@ import { withAuth } from '../components/AuthProvider';
 
 
 class Form extends Component {
+  
   render() {
     return (
       <div>
