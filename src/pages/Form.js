@@ -4,6 +4,30 @@ import { withAuth } from '../components/AuthProvider';
 
 
 class Form extends Component {
+  state = {
+    username: "",
+    password: "",
+    name:"",
+    phoneNumber:"",
+  }
+
+
+  handleFormSubmit = (event) => {
+    event.preventDefault();
+    const { username, password } = this.state
+
+    this.props.login({ username, password })
+      .then(() => {
+        this.props.history.push('/private')
+      })
+      .catch( error => console.log(error) )
+  }
+
+  handleChange = (event) => {  
+    const {name, value} = event.target;
+    this.setState({[name]: value});
+  }
+
   render() {
     return (
       <div>
