@@ -14,7 +14,7 @@ class Form extends Component {
 
   handleFormSubmit = (event) => {
     event.preventDefault();
-    const { username, password } = this.state
+    const { username, password } = this.state;
 
     this.props.login({ username, password })
       .then(() => {
