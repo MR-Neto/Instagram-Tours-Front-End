@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import { withAuth } from '../components/AuthProvider';
 import Navbar from '../components/Navbar';
 import bookingService from '../lib/bookingService';

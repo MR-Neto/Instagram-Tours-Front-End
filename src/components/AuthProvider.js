@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import authService from '../lib/authService';
 
 export const AuthContext = React.createContext(
@@ -40,7 +40,23 @@ export default class AuthProvider extends Component {
       user,
     })
   }
-
+  
+  loginUser = (body) => {
+    return authService.login(body)
+    .then((user) => {
+      this.setUser(user);
+    })
+    .catch(error => console.log(error))
+  }
+  
+  signupUser = (body) => {
+    return authService.signup(body)
+    .then((user) => {
+      this.setUser(user);
+    })
+    .catch(error => console.log(error))
+  }
+  
   logoutUser = () => {
     return authService.logout()
       .then(() => {
@@ -52,30 +68,21 @@ export default class AuthProvider extends Component {
       .catch( error => console.log(error))
   }
 
-  loginUser = (body) => {
-    return authService.login(body)
-      .then((user) => {
-        this.setUser(user);
-      })
-      .catch(error => console.log(error))
-  }
-
-  signupUser = (body) => {
-    return authService.signup(body)
-      .then((user) => {
-        this.setUser(user);
-      })
-      .catch(error => console.log(error))
-  }
-
   componentDidMount() {
     authService.me()
-      .then((user) => {
-        this.setState({
-          isLogged: true,
-          user,
-          status: 'loaded'
-        })
+    .then((user) => {
+        if(user){
+          this.setState({
+            isLogged: true,
+            user,
+            status: 'loaded'
+          })
+        } else {
+          this.setState({
+            isLogged: false,
+            status: 'loaded'
+          })
+        }
       })
       .catch((error) => {
         this.setState({ 

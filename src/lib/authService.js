@@ -9,18 +9,22 @@ class AuthService {
   }
 
   signup(user) {
-    const { username, password } = user;
-    return this.auth.post('/auth/signup', { username, password })
-      .then(({ data }) => data)
+    return this.auth.post('/auth/signup', user)
+      .then(({ data }) => {
+        console.log('Sign up successful');
+        return data;
+      })
       .catch((err) => {
         console.log("Error: ", err)
       });
   }
 
   login(user) {
-    const { username, password } = user;
-    return this.auth.post('/auth/login', { username, password })
-      .then(({ data }) => data)
+    return this.auth.post('/auth/login', user)
+      .then(({ data }) => {
+        console.log('Login successful');
+        return data;
+      })
       .catch((err) => {
         console.log("Error: ", err)
       });
@@ -28,13 +32,16 @@ class AuthService {
 
   logout() {
     return this.auth.post('/auth/logout', {})
-      .then(({ data }) => data)
+      .then(({ data }) => {
+        console.log('Logout successful');
+        return data;
+      })
       .catch((err) => {
         console.log("Error: ", err)
       });
   }
 
-  me(user) {
+  me() {
     return this.auth.get('/auth/me')
       .then(({ data }) => data)
       .catch((err) => {
