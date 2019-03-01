@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { withAuth } from '../components/AuthProvider';
+import { withRouter } from 'react-router-dom'
 import Navbar from '../components/Navbar';
 import bookingService from '../lib/bookingService';
 import tourService from '../lib/tourService';
@@ -8,20 +9,28 @@ import tourService from '../lib/tourService';
 class Cart extends Component {
 
   updateStageHandler = () => {
-    this.props.updateStage(0)
+    this.props.updateStage(null,0)
   }
 
   makeBookingHandler = () => {
-    const { date, numberOfTickets, placesPicked } = bookingService;
-    const booking = {
-      date,
-      user: {
-        buyer: this.props.user._id,
-        numberOfTickets,
-      },
-      places: placesPicked,
-    };
-    tourService.makeBooking(booking);
+    if(this.props.isLogged){
+      const { date, numberOfTickets, placesPicked } = bookingService;
+      const booking = {
+        date,
+        user: {
+          buyer: this.props.user._id,
+          numberOfTickets,
+        },
+        places: placesPicked,
+      };
+      tourService.makeBooking(booking)
+        .then(()=>{
+          bookingService.clearValues();
+          this.props.history.push('/profile');
+        });
+    } else {
+      this.props.history.push('/auth/login');
+    }
   }
 
   render() {
@@ -47,4 +56,4 @@ class Cart extends Component {
   }
 }
 
-export default withAuth(Cart);
+export default withRouter(withAuth(Cart));

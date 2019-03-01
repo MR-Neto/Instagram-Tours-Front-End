@@ -16,7 +16,7 @@ class Form extends Component {
       this.props
         .signup(this.state)
         .then(() => {
-          this.props.history.push('/  book');
+          this.props.history.goBack();
         })
         .catch(error => console.log(error));
     } else {
@@ -24,7 +24,7 @@ class Form extends Component {
       this.props
         .login({ username, password })
         .then(() => {
-          this.props.history.push("/book");
+          this.props.history.goBack();
         })
         .catch(error => console.log(error));
     }
