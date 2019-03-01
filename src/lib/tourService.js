@@ -10,17 +10,26 @@ class TourService {
 
   getAllTours() {
     return this.api.get('/tours')
-      .then(({ data }) => data);
+      .then(({ data }) => data)
+      .catch((err) => {
+        console.log("Error: ", err)
+      });
   }
 
   makeBooking(date, user, places) {
     return this.api.post('/book', { date, user, places })
-      .then(({ data }) => data);
+      .then(({ data }) => data)
+      .catch((err) => {
+        console.log("Error: ", err)
+      });
   }
 
   getBookedToursByUser(userId) {
     return this.api.get(`/${userId}/bookedtours`)
-      .then(({ data }) => data);
+      .then(({ data }) => data)
+      .catch((err) => {
+        console.log("Error: ", err)
+      });
   }
 }
 
