@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import { withAuth } from '../components/AuthProvider';
 import Navbar from '../components/Navbar';
 import bookingService from '../lib/bookingService';
@@ -16,7 +16,7 @@ class Cart extends Component {
     const booking = {
       date,
       user: {
-        buyer: '5c7800f0fa2452180b66bd6d',
+        buyer: this.props.user._id,
         numberOfTickets,
       },
       places: placesPicked,
