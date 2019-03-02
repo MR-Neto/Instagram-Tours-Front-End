@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { List } from 'semantic-ui-react';
-import { withAuth } from '../components/AuthProvider';
+import { withAuth } from '../routes/AuthProvider';
 import tourService from '../lib/tourService';
 
 class OrderHistory extends Component {

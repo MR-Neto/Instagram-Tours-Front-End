@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Navbar from "../components/Navbar";
-import { withAuth } from "../components/AuthProvider";
+import { withAuth } from "../routes/AuthProvider";
 
 class Form extends Component {
   state = {

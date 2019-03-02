@@ -1,21 +1,18 @@
 import React, { Component } from 'react';
 import { List } from 'semantic-ui-react';
 import Navbar from '../components/Navbar';
-import { withAuth } from '../components/AuthProvider';
+import { withAuth } from '../routes/AuthProvider';
 import bookingService from '../lib/bookingService';
 import tourService from '../lib/tourService';
+import Calendar from '../components/Calendar';
 
 class Booking extends Component {
 
   state = {
     date: bookingService.date,
     numberOfTickets: bookingService.numberOfTickets,
-<<<<<<< HEAD
     placesPicked: bookingService.placesPicked,
     tours: [],
-=======
-    placesPicked: bookingService.placesPicked
->>>>>>> f5f0649c33798b3b23fad26a6b906f46c3f176b4
   }
 
   handleChangeInput = (e) => {
@@ -60,6 +57,7 @@ class Booking extends Component {
       <div>
         <Navbar />
         <input type="date" name="date" value={date} onChange={this.handleChangeInput} />
+        <Calendar />
         <h2>Pick 5 locations</h2>
         <div>
           <img src="http://lorempixel.com/400/200/city/" alt="places"></img>
@@ -73,7 +71,7 @@ class Booking extends Component {
           <button onClick={this.updateStageHandler}>Confirm</button>
         </div>
         <List divided relaxed>
-          {this.renderAllTours()}
+          {this.state.tours && this.renderAllTours()}
         </List>
       </div>
     )

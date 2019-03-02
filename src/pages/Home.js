@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
-import { withAuth } from '../components/AuthProvider';
+import { withAuth } from '../routes/AuthProvider';
 
 
 class Home extends Component {

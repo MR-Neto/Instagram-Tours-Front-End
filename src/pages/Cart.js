@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { withAuth } from '../components/AuthProvider';
+import { withAuth } from '../routes/AuthProvider';
 import { withRouter } from 'react-router-dom'
 import Navbar from '../components/Navbar';
 import bookingService from '../lib/bookingService';
