@@ -162,7 +162,12 @@ main {
 
 .calendar .body .cell {
   position: relative;
-  height: 5em;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  height: 5rem;
+  width: 5rem;
   overflow: hidden;
   cursor: pointer;
   background: var(--neutral-color);
@@ -176,7 +181,6 @@ main {
 
 .calendar .body .selected {
   color: var(--text-color-light);
-  
 }
 
 .calendar .body .row {
@@ -192,11 +196,8 @@ main {
 }
 
 .calendar .body .cell .number {
-  position: absolute;
   font-size: 90%;
   line-height: 1;
-  top: 50%;
-  right: 50%;
   font-weight: 700;
 }
 
@@ -217,14 +218,17 @@ main {
 
 }
 
-.calendar .body .available {
-  background: green;  
+.calendar .body .available .number {
+  background: green;
+  border-radius: 50%;
 }
 
-.calendar .body .joinable {
-  background: yellow;  
+.calendar .body .joinable .number {
+  background: yellow;
+  border-radius: 50%;
 }
 
-.calendar .body .unavailable {
-  background: red;  
+.calendar .body .unavailable .number {
+  background: red;
+  border-radius: 50%;
 }

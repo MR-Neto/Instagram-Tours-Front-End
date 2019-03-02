@@ -5,6 +5,7 @@ import { withAuth } from '../routes/AuthProvider';
 import bookingService from '../lib/bookingService';
 import tourService from '../lib/tourService';
 import Calendar from '../components/Calendar';
+import Slideshow from '../components/Slideshow';
 
 class Booking extends Component {
 
@@ -27,9 +28,9 @@ class Booking extends Component {
   }
 
   renderAllTours() {
-    return this.state.tours.map((tour, index) => {
+    return this.state.tours.map((tour) => {
       return (
-          <List.Item key={`tour.date-${index}`}>
+          <List.Item key={tour._id}>
             <List.Icon name='camera retro' size='large' verticalAlign='middle' />
             <List.Content>
               <List.Header as='a'>{tour.date}</List.Header>
@@ -59,11 +60,7 @@ class Booking extends Component {
         <input type="date" name="date" value={date} onChange={this.handleChangeInput} />
         <Calendar tours={this.state.tours}/>
         <h2>Pick 5 locations</h2>
-        <div>
-          <img src="http://lorempixel.com/400/200/city/" alt="places"></img>
-          <img src="http://lorempixel.com/400/200/city/" alt="places"></img>
-          <img src="http://lorempixel.com/400/200/city/" alt="places"></img>
-        </div>
+        <Slideshow />
         <div>
           <label htmlFor="number-of-people">No of people</label>
           <input type="number" name="numberOfTickets" value={numberOfTickets} onChange={this.handleChangeInput} />

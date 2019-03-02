@@ -12,7 +12,7 @@ class OrderHistory extends Component {
   renderBookedTours() {
     return this.state.tours.map((tour) => {
       return (
-        <List.Item>
+        <List.Item key={tour._id}>
             <List.Icon name='camera retro' size='large' verticalAlign='middle' />
             <List.Content>
               <List.Header as='a'>{tour.date}</List.Header>

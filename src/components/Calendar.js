@@ -106,8 +106,7 @@ class Calendar extends Component {
                 this.onDateClick(dateFns.parse(cloneDay));
               }}
             >
-              <span className="number">{formattedDate}</span>
-              {/* <span className="">{this.props.tours}</span> */}
+              <div className="number">{formattedDate}</div>
             </div>          
         );
         day = dateFns.addDays(day, 1);
