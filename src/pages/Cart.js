@@ -9,7 +9,7 @@ import tourService from '../lib/tourService';
 class Cart extends Component {
 
   updateStageHandler = () => {
-    this.props.updateStage(null,0)
+    this.props.updateStage(null, 0)
   }
 
   makeBookingHandler = () => {

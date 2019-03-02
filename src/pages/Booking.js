@@ -27,9 +27,9 @@ class Booking extends Component {
   }
 
   renderAllTours() {
-    return this.state.tours.map((tour) => {
+    return this.state.tours.map((tour, index) => {
       return (
-          <List.Item>
+          <List.Item key={`tour.date-${index}`}>
             <List.Icon name='camera retro' size='large' verticalAlign='middle' />
             <List.Content>
               <List.Header as='a'>{tour.date}</List.Header>
@@ -57,7 +57,7 @@ class Booking extends Component {
       <div>
         <Navbar />
         <input type="date" name="date" value={date} onChange={this.handleChangeInput} />
-        <Calendar />
+        <Calendar tours={this.state.tours}/>
         <h2>Pick 5 locations</h2>
         <div>
           <img src="http://lorempixel.com/400/200/city/" alt="places"></img>

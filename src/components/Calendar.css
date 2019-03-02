@@ -155,7 +155,7 @@ main {
   text-transform: uppercase;
   font-weight: 400;
   color: var(--text-color-light);
-  font-size: 70%;
+  font-size: 90%;
   padding: .75em 0;
   border-bottom: 1px solid var(--border-color);
 }
@@ -163,7 +163,6 @@ main {
 .calendar .body .cell {
   position: relative;
   height: 5em;
-  border-right: 1px solid var(--border-color);
   overflow: hidden;
   cursor: pointer;
   background: var(--neutral-color);
@@ -176,9 +175,8 @@ main {
 }
 
 .calendar .body .selected {
-  border-left: 10px solid transparent;
-  border-image: linear-gradient(45deg, #1a8fff 0%,#53cbf1 40%);
-  border-image-slice: 1;
+  color: var(--text-color-light);
+  
 }
 
 .calendar .body .row {
@@ -195,10 +193,10 @@ main {
 
 .calendar .body .cell .number {
   position: absolute;
-  font-size: 82.5%;
+  font-size: 90%;
   line-height: 1;
-  top: .75em;
-  right: .75em;
+  top: 50%;
+  right: 50%;
   font-weight: 700;
 }
 
@@ -207,21 +205,8 @@ main {
   pointer-events: none;
 }
 
-.calendar .body .cell .bg {
-  font-weight: 700;
-  line-height: 1;
-  color: var(--main-color);
-  opacity: 0;
-  font-size: 8em;
-  position: absolute;
-  top: -.2em;
-  right: -.05em;
-  transition: .25s ease-out;
-  letter-spacing: -.07em;
-}
-
-.calendar .body .cell:hover .bg, .calendar .body .selected .bg  {
-  opacity: 0.05;
+.calendar .body .cell:hover .bg, .calendar .body .selected  {
+  opacity: 1;
   transition: .5s ease-in;
 }
 
@@ -232,6 +217,14 @@ main {
 
 }
 
-.popup {
-  background-color: #53cbf1;
+.calendar .body .available {
+  background: green;  
+}
+
+.calendar .body .joinable {
+
+}
+
+.calendar .body .unavailable {
+
 }

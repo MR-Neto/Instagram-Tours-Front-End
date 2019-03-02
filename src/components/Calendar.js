@@ -11,7 +11,7 @@ class Calendar extends Component {
   };
 
   renderHeader() {
-    const dateFormat = "MMMM YYYY";
+    const dateFormat = "MMM YYYY";
     return (
       <div className="header row flex-middle">
         <div className="col col-start">
@@ -32,7 +32,7 @@ class Calendar extends Component {
   }
 
   renderDays() {
-    const dateFormat = "dddd";
+    const dateFormat = "dd";
     const days = [];
     let startDate = dateFns.startOfWeek(this.state.currentMonth);
     for (let i = 0; i < 7; i++) {
@@ -51,6 +51,7 @@ class Calendar extends Component {
     const monthEnd = dateFns.endOfMonth(monthStart);
     const startDate = dateFns.startOfWeek(monthStart);
     const endDate = dateFns.endOfWeek(monthEnd);
+    const { tours } = this.props;
 
     const dateFormat = "D";
     const rows = [];
@@ -64,18 +65,20 @@ class Calendar extends Component {
         days.push(        
             <div
               className={`col cell ${
+                // On current month display, disable days from past and next month
                 !dateFns.isSameMonth(day, monthStart)
                   ? "disabled"
-                  : dateFns.isSameDay(day, selectedDate) ? "selected" : ""
+                  // Disable all past days
+                  : dateFns.isBefore(day, dateFns.startOfToday(new Date())) ? "disabled"
+                  : dateFns.isSameDay(day, selectedDate) ? "selected" : "available"
               }`}
               key={day}
               onClick={() => {
                 this.onDateClick(dateFns.parse(cloneDay));
-                this.renderPopup();
               }}
             >
               <span className="number">{formattedDate}</span>
-              <span className="bg">{formattedDate}</span>
+              {/* <span className="">{this.props.tours}</span> */}
             </div>          
         );
         day = dateFns.addDays(day, 1);
@@ -90,26 +93,10 @@ class Calendar extends Component {
     return <div className="body">{rows}</div>;
   }
 
-  renderPopup() {
-    return (
-      <Popup className='popup' trigger={<Button>Show flowing popup</Button>} flowing hoverable>
-          <Grid centered divided columns={3}>
-            <Grid.Column textAlign='center'>
-              <Header as='h4'>Basic Plan</Header>
-              <p>
-                <b>2</b> projects, $10 a month
-              </p>
-              <Button>Choose</Button>
-            </Grid.Column>
-          </Grid>
-        </Popup>
-    );
-  }
-
   onDateClick = day => {
     this.setState({
       selectedDate: day
-    }, () => console.log(this.state.selectedDate));
+    }, () => console.log(this.state.selectedDate, this.props.tours));
     
   };
 
@@ -137,4 +124,3 @@ class Calendar extends Component {
 }
 
 export default Calendar;
-
