@@ -222,9 +222,9 @@ main {
 }
 
 .calendar .body .joinable {
-
+  background: yellow;  
 }
 
 .calendar .body .unavailable {
-
+  background: red;  
 }

@@ -1,14 +1,41 @@
 import React, { Component } from 'react';
 import dateFns from 'date-fns';
-import { Header, Button, Popup, Grid } from 'semantic-ui-react';
 import './Calendar.css';
+import tourService from '../lib/tourService';
 
 class Calendar extends Component {
-
+  
   state = {
     currentMonth: new Date(),
-    selectedDate: new Date()
+    selectedDate: new Date(),
+    tours: [],
   };
+  
+  componentDidMount() {
+    tourService.getAllTours()
+      .then((tours) => {
+        this.setState({
+          tours,
+        });
+      })
+      .catch(error => console.log(error));
+  }
+
+  findMatchingTourByDate = (date) => {
+    const { tours } = this.state;
+    const formatDate = 'YYYY-MM-DD';
+    const formattedInputDate = dateFns.format(date, formatDate);
+    return tours.find((tour) => {
+      const formattedTourDate = dateFns.format(tour.date, formatDate);
+      return dateFns.isEqual(formattedTourDate, formattedInputDate);
+    });
+  }
+
+  updateCurrentDay = (day) => {
+    this.setState({
+      currentDay: day,
+    });
+  }
 
   renderHeader() {
     const dateFormat = "MMM YYYY";
@@ -51,8 +78,6 @@ class Calendar extends Component {
     const monthEnd = dateFns.endOfMonth(monthStart);
     const startDate = dateFns.startOfWeek(monthStart);
     const endDate = dateFns.endOfWeek(monthEnd);
-    const { tours } = this.props;
-
     const dateFormat = "D";
     const rows = [];
     let days = [];
@@ -61,6 +86,8 @@ class Calendar extends Component {
     while (day <= endDate) {
       for (let i = 0; i < 7; i++) {
         formattedDate = dateFns.format(day, dateFormat);
+        // Find the corresponding day in our tours
+        const foundTour = this.findMatchingTourByDate(day);
         const cloneDay = day;
         days.push(        
             <div
@@ -70,6 +97,8 @@ class Calendar extends Component {
                   ? "disabled"
                   // Disable all past days
                   : dateFns.isBefore(day, dateFns.startOfToday(new Date())) ? "disabled"
+                  : foundTour && foundTour.isFull ? 'unavailable'
+                  : foundTour && !foundTour.isFull ? 'joinable'
                   : dateFns.isSameDay(day, selectedDate) ? "selected" : "available"
               }`}
               key={day}
@@ -97,7 +126,6 @@ class Calendar extends Component {
     this.setState({
       selectedDate: day
     }, () => console.log(this.state.selectedDate, this.props.tours));
-    
   };
 
   nextMonth = () => {
@@ -113,11 +141,12 @@ class Calendar extends Component {
   };
 
   render() {
+    const hasLoadedTours = this.state.tours.length > 0;
     return (
       <div className="calendar">
         {this.renderHeader()}
         {this.renderDays()}
-        {this.renderCells()}
+        {hasLoadedTours && this.renderCells()}
       </div>
     )
   }

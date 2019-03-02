@@ -40,7 +40,7 @@ class Booking extends Component {
     });
   }
 
-  componentDidMount() {
+  componentWillMount() {
     tourService.getAllTours()
       .then((tours) => {
         this.setState({
