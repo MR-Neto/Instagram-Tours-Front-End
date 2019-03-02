@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import Booking from '../pages/Booking';
-import Cart from '../pages/Cart';
+import InjectedCheckoutForm from '../pages/Cart';
 import bookingService from '../lib/bookingService';
+import {Elements} from 'react-stripe-elements';
 
 class BookingController extends Component {
 
@@ -9,8 +10,8 @@ class BookingController extends Component {
     stage: bookingService.stage,
   }
 
-  updateStage = (value,num) => {
-    bookingService.setValues(value,num);
+  updateStage = (value, num) => {
+    bookingService.setValues(value, num);
     this.setState({
       stage: num,
     });
@@ -18,11 +19,15 @@ class BookingController extends Component {
 
 
   render() {
-    console.log("STAGE",this.state.stage);
+    console.log("STAGE", this.state.stage);
     return (
       <div>
         {this.state.stage === 0 && <Booking updateStage={this.updateStage} />}
-        {this.state.stage === 1 && <Cart updateStage={this.updateStage} />}
+        {this.state.stage === 1 &&
+          <Elements>
+            <InjectedCheckoutForm updateStage={this.updateStage}/>
+          </Elements>        
+        }
       </div>
     )
   }
