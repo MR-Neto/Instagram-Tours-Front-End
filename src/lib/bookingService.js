@@ -16,6 +16,17 @@ class BookingService {
       this.stage = num;
     }
   }
+
+  togglePlacesPicked(placeId) {
+    const { placesPicked } = this;
+    if(placesPicked.includes(placeId)) {
+      placesPicked.splice(placesPicked.indexOf(placeId), 1);
+    } else {
+      this.placesPicked.push(placeId);
+    }
+    console.log(placesPicked);
+  }
+
   clearValues(values) {
     this.date = '';
     this.placesPicked = [];

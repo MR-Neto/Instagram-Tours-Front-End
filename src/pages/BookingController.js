@@ -19,7 +19,6 @@ class BookingController extends Component {
 
 
   render() {
-    console.log("STAGE", this.state.stage);
     return (
       <div>
         {this.state.stage === 0 && <Booking updateStage={this.updateStage} />}
