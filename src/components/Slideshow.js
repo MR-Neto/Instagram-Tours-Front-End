@@ -65,7 +65,7 @@ class Slideshow extends Component {
           </button>   
         </div>
         <div className={`cards-slider active-slide-${place.index}`}>
-          <div className="cards-slider-wrapper" onClick={this.addPlacesToCart} style={{
+          <div className="cards-slider-wrapper" style={{
             'transform': `translateX(-${place.index*(100/places.length)}%)`
           }}>
             {this.renderAllPlaces(places)}
