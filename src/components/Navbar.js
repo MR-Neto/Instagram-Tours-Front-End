@@ -18,10 +18,10 @@ class Navbar extends Component {
       return (
         <div>
           <Dropdown.Item>
-            <Link to="/auth/login">Log In</Link>
+            <Link to="/auth">Log In</Link>
           </Dropdown.Item>
           <Dropdown.Item>
-            <Link to="/auth/signup">Sign Up</Link>
+            <Link to="/auth">Sign Up</Link>
           </Dropdown.Item>
         </div> 
       );

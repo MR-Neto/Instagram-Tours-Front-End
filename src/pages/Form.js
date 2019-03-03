@@ -7,14 +7,16 @@ class Form extends Component {
     username: "",
     password: "",
     name: "",
-    phoneNumber: ""
+    phoneNumber: "",
+    mode: "login",
   };
 
   handleFormSubmit = event => {
-    event.preventDefault();
-    if(event.target.name === 'Sign Up') {
+    const { mode } = this.state;
+    if (mode === 'signup') {
+      const { username, password, name, phoneNumber } = this.state;
       this.props
-        .signup(this.state)
+        .signup({ username, password, name, phoneNumber })
         .then(() => {
           this.props.history.goBack();
         })
@@ -36,10 +38,9 @@ class Form extends Component {
   };
 
   renderSignUp = () => {
-    const { url } = this.props.match;
-    const { phoneNumber, name } = this.state;
+    const { phoneNumber, name, mode } = this.state;
 
-    if (url === "/auth/signup") {
+    if (mode === "signup") {
       return (
         <div>
           <label htmlFor="name">Full Name</label>
@@ -51,22 +52,29 @@ class Form extends Component {
     }
   };
 
-  renderSubmitButton = () => this.props.match.url === "/auth/signup" ? "Sign Up" : "Log In";
-  
+  singUpForm = () => {
+    this.setState({ mode: "signup" });
+  }
+  loginForm = () => {
+    this.setState({ mode: "login" });
+  }
+
   render() {
-    const { username, password } = this.state;
+    const { username, password, mode } = this.state;
 
     return (
       <div>
         <Navbar />
-        <form>
-          <label htmlFor="username">Username</label>
-          <input type="text" name="username" value={username} onChange={this.handleChange} />
-          <label htmlFor="password">Password</label>
-          <input type="password" name="password" value={password} onChange={this.handleChange} />
-          {this.renderSignUp()}
-          <button name ={this.renderSubmitButton()} onClick={this.handleFormSubmit}>{this.renderSubmitButton()}</button>
-        </form>
+        <label htmlFor="username">Username</label>
+        <input type="text" name="username" value={username} onChange={this.handleChange} />
+        <label htmlFor="password">Password</label>
+        <input type="password" name="password" value={password} onChange={this.handleChange} />
+        {this.renderSignUp()}
+        {mode === "login" && <button name="login" onClick={this.handleFormSubmit}>Log In</button>}
+        <button name="signup" onClick={(mode === "login") ? this.singUpForm : this.handleFormSubmit}>Sign Up</button>
+        <button name="signupGoogle" onClick={this.handleFormSubmit}>Google</button>
+        <button name="signupFacebook" onClick={this.handleFormSubmit}>Facebook</button>
+        {mode === "signup" && <button name="login" onClick={this.loginForm}>Log In</button>}
       </div>
     );
   }
