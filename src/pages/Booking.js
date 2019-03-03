@@ -26,6 +26,16 @@ class Booking extends Component {
   updateStageHandler = () => {
     this.props.updateStage(this.state, 1);
   }
+  
+  componentWillMount() {
+    tourService.getAllTours()
+      .then((tours) => {
+        this.setState({
+          tours,
+        });
+      })
+      .catch(error => console.log(error));
+  }
 
   renderAllTours() {
     return this.state.tours.map((tour) => {
@@ -41,24 +51,14 @@ class Booking extends Component {
     });
   }
 
-  componentWillMount() {
-    tourService.getAllTours()
-      .then((tours) => {
-        this.setState({
-          tours,
-        });
-      })
-      .catch(error => console.log(error));
-  }
-
   render() {
-    const { date, numberOfTickets, placesPicked } = this.state;
+    const { date, numberOfTickets } = this.state;
 
     return (
       <div>
         <Navbar />
         <input type="date" name="date" value={date} onChange={this.handleChangeInput} />
-        <Calendar tours={this.state.tours}/>
+        <Calendar />
         <h2>Pick 5 locations</h2>
         <Slideshow />
         <div>

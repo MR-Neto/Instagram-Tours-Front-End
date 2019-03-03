@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './Slideshow.scss';
-import Card from './Card';
+import Place from './Place';
 import placesService from '../lib/placesService';
 
 class Slideshow extends Component {
@@ -40,8 +40,17 @@ class Slideshow extends Component {
     });
   }
 
+  renderAllPlaces = (places) => {
+    return places.map((place) => {
+      return (
+        <Place key={place._id} place={place} />
+        );
+    });
+  }
+
   render() {
     const { places, place } = this.state;
+
     return (
       <div className="slideshow">
         <div className="buttons">
@@ -56,12 +65,10 @@ class Slideshow extends Component {
           </button>   
         </div>
         <div className={`cards-slider active-slide-${place.index}`}>
-          <div className="cards-slider-wrapper" style={{
+          <div className="cards-slider-wrapper" onClick={this.addPlacesToCart} style={{
             'transform': `translateX(-${place.index*(100/places.length)}%)`
           }}>
-            {
-              places.map((place) => <Card key={place._id} place={place} />)
-              }
+            {this.renderAllPlaces(places)}
           </div>
         </div>
       </div>
