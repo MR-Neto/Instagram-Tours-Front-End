@@ -31,11 +31,12 @@ class Calendar extends Component {
     });
   }
 
-  updateCurrentDay = (day) => {
-    this.setState({
-      currentDay: day,
-    });
-  }
+  // updateCurrentDay = (day) => {
+  //   console.log('yeasss')
+  //   this.setState({
+  //     currentDay: day,
+  //   });
+  // }
 
   renderHeader() {
     const dateFormat = "MMM YYYY";
@@ -124,7 +125,8 @@ class Calendar extends Component {
   onDateClick = day => {
     this.setState({
       selectedDate: day
-    }, () => console.log(this.state.selectedDate, this.props.tours));
+    });
+    this.props.updateSelectedDateHandler(day);
   };
 
   nextMonth = () => {

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { List } from 'semantic-ui-react';
+import { Transition } from 'semantic-ui-react';
 import Navbar from '../components/Navbar';
 import { withAuth } from '../routes/AuthProvider';
 import bookingService from '../lib/bookingService';
@@ -23,11 +23,17 @@ class Booking extends Component {
     });
   }
 
+  updateSelectedDate = date => {
+    this.setState({
+      date,
+    });
+  }
+
   updateStageHandler = () => {
     this.props.updateStage(this.state, 1);
   }
-  
-  componentWillMount() {
+
+  componentDidMount() {
     tourService.getAllTours()
       .then((tours) => {
         this.setState({
@@ -37,39 +43,21 @@ class Booking extends Component {
       .catch(error => console.log(error));
   }
 
-  renderAllTours() {
-    return this.state.tours.map((tour) => {
-      return (
-          <List.Item key={tour._id}>
-            <List.Icon name='camera retro' size='large' verticalAlign='middle' />
-            <List.Content>
-              <List.Header as='a'>{tour.date}</List.Header>
-              <List.Description as='a'>{tour.price}</List.Description>
-            </List.Content>
-          </List.Item>
-      );
-    });
-  }
-
   render() {
-    const { date, numberOfTickets } = this.state;
+    const { numberOfTickets } = this.state;
 
     return (
       <div>
         <Navbar />
-        <input type="date" name="date" value={date} onChange={this.handleChangeInput} />
-        <Calendar />
+        <Calendar updateSelectedDateHandler={this.updateSelectedDate}/>
         <h2>Pick 5 locations</h2>
-        <Slideshow />
+        <Slideshow hasAllPlaces={true}/>
         <div>
           <label htmlFor="number-of-people">No of people</label>
           <input type="number" name="numberOfTickets" value={numberOfTickets} onChange={this.handleChangeInput} />
           <p>Price: {25 * numberOfTickets} €</p>
           <button onClick={this.updateStageHandler}>Confirm</button>
         </div>
-        <List divided relaxed>
-          {this.state.tours && this.renderAllTours()}
-        </List>
       </div>
     )
   }
