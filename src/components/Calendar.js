@@ -95,12 +95,12 @@ class Calendar extends Component {
               className={`col cell ${
                 // On current month display, disable days from past and next month
                 !dateFns.isSameMonth(day, monthStart)
-                  ? "disabled"
+                  ? 'disabled'
                   // Disable all past days
-                  : dateFns.isBefore(day, dateFns.startOfToday(new Date())) ? "disabled"
+                  : dateFns.isBefore(day, dateFns.startOfToday(new Date())) ? 'disabled'
                   : foundTour && foundTour.isFull ? 'unavailable'
-                  : foundTour && !foundTour.isFull ? 'joinable'
-                  : dateFns.isSameDay(day, selectedDate) ? "selected" : "available"
+                  : dateFns.isSameDay(day, selectedDate) ? 'selected'
+                  : foundTour && !foundTour.isFull ? 'joinable' : 'available'
               }`}
               key={day}
               onClick={() => {

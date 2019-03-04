@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Transition } from 'semantic-ui-react';
 import Navbar from '../components/Navbar';
 import { withAuth } from '../routes/AuthProvider';
 import bookingService from '../lib/bookingService';

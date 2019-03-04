@@ -4,6 +4,15 @@ import { withAuth } from "../routes/AuthProvider";
 import { Dropdown, Menu } from "semantic-ui-react";
 
 class Navbar extends Component {
+
+  state = { 
+    visible: false,
+  }
+
+  handleHideClick = () => this.setState({ visible: false })
+  handleShowClick = () => this.setState({ visible: true })
+  handleSidebarHide = () => this.setState({ visible: false })
+
   MenuExampleAttached = (isLogged) => {
     if(isLogged) {
       return (
@@ -33,7 +42,6 @@ class Navbar extends Component {
 
     return (
       <nav>
-        <h1>Tours</h1>
         <Menu attached="top">
           <Dropdown item icon="bars" simple>
             <Dropdown.Menu>
