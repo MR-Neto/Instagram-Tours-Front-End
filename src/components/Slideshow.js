@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './Slideshow.scss';
 import Place from './Place';
 import placesService from '../lib/placesService';
+import bookingService from '../lib/bookingService';
 
 class Slideshow extends Component {
 
@@ -14,14 +15,25 @@ class Slideshow extends Component {
   }
 
   componentDidMount() {
-    placesService.getAllPlaces()
-      .then((places) => {
-        this.setState({
-          places,
-          place: places[0],
-        });
-      })
-      .catch(error => console.log(error));
+    if(this.props.hasAllPlaces) {
+      placesService.getAllPlaces()
+        .then((places) => {
+          this.setState({
+            places,
+            place: places[0],
+          });
+        })
+        .catch(error => console.log(error));
+    } else {
+        placesService.getPlacesById(bookingService.placesPicked)
+          .then((places) => {
+            this.setState({
+              places,
+              place: places[0],
+            });
+          })
+          .catch(error => console.log(error));
+    }
   }
 
   nextPlace = () => {
@@ -51,28 +63,32 @@ class Slideshow extends Component {
   render() {
     const { places, place } = this.state;
 
-    return (
-      <div className="slideshow">
-        <div className="buttons">
-          <button onClick={() => this.prevPlace()}
-          disabled={place.index === 0}>
-            Prev
-          </button>
-          <button onClick={() => this.nextPlace()}
-          disabled={place.index === places.length - 1}
-          >
-            Next
-          </button>   
-        </div>
-        <div className={`cards-slider active-slide-${place.index}`}>
-          <div className="cards-slider-wrapper" style={{
-            'transform': `translateX(-${place.index*(100/places.length)}%)`
-          }}>
-            {this.renderAllPlaces(places)}
+    if(places.length > 0) {
+      return (
+        <div className="slideshow">
+          <div className="buttons">
+            <button onClick={() => this.prevPlace()}
+            disabled={place.index === 0}>
+              Prev
+            </button>
+            <button onClick={() => this.nextPlace()}
+            disabled={place.index === places.length - 1}
+            >
+              Next
+            </button>   
+          </div>
+          <div className={`cards-slider active-slide-${place.index}`}>
+            <div className="cards-slider-wrapper" style={{
+              'transform': `translateX(-${place.index*(100/places.length)}%)`
+            }}>
+              {this.renderAllPlaces(places)}
+            </div>
           </div>
         </div>
-      </div>
-    );
+      );
+    } else {
+      return null;
+    }
   }
 }
 

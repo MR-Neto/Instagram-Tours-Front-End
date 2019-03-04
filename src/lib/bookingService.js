@@ -24,7 +24,15 @@ class BookingService {
     } else {
       this.placesPicked.push(placeId);
     }
-    console.log(placesPicked);
+  }
+
+  setNumberOfTickets(num) {
+    this.numberOfTickets = num;
+  }
+
+  setDate(date) {
+    this.date = date;
+    console.log('update BOOKING SERVICE DATE', this.date);
   }
 
   clearValues(values) {
@@ -33,7 +41,6 @@ class BookingService {
     this.numberOfTickets = 0;
     this.stage = 0;
   }
-
 }
 
 const booking = new BookingService('', [], 0, 0);

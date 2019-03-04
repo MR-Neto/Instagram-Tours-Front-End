@@ -15,18 +15,13 @@ class Home extends Component {
         </div>
         <div className="gallery">
           <h4>Places</h4>
-          <div>
-            <a href="#">Sagrada</a>
-            <a href="#">Bunkers</a>
-            <a href="#">Arc Triomf</a>
-          </div>
+          
         </div>
         <div className="social links">
           <h4>About Us</h4>
           <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sunt aperiam, unde officiis reprehenderit, enim dolorem odio sed nulla omnis exercitationem quasi itaque iure accusamus corrupti iusto incidunt, dolorum cum optio!</p>
           <div>
-            <a href="#">Facebock</a>
-            <a href="#">Instagram</a>
+            
           </div>
         </div>
         

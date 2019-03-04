@@ -1,9 +1,18 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { withAuth } from "../routes/AuthProvider";
-import { Dropdown, Icon, Menu } from "semantic-ui-react";
+import { Dropdown, Menu } from "semantic-ui-react";
 
 class Navbar extends Component {
+
+  state = { 
+    visible: false,
+  }
+
+  handleHideClick = () => this.setState({ visible: false })
+  handleShowClick = () => this.setState({ visible: true })
+  handleSidebarHide = () => this.setState({ visible: false })
+
   MenuExampleAttached = (isLogged) => {
     if(isLogged) {
       return (
@@ -29,12 +38,10 @@ class Navbar extends Component {
   };
 
   render() {
-    const { isLogged, logout } = this.props;
+    const { isLogged } = this.props;
 
     return (
       <nav>
-        <button>Back</button>
-        <h1>Tours</h1>
         <Menu attached="top">
           <Dropdown item icon="bars" simple>
             <Dropdown.Menu>
