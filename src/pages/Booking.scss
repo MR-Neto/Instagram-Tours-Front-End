@@ -2,15 +2,38 @@
   display: flex;
   flex-direction: row;
   justify-content: center;
-  .input {
-    width: 13%;
-  }
+  align-items: center;
+  align-self: center;
+  padding: 1rem 0;
   .button {
     margin-right: 1rem;
     margin-left: 1rem;
   }
   p {
-    font-size: 1.5rem;
-    margin-right: 1rem;
+    font-size: 2rem;
+    padding: 1rem;
+    margin: 0;
   }
+}
+
+.filters {
+  padding: 1rem 0.5rem;
+  display: flex;
+  flex-direction: left;
+  justify-content: space-between;
+  .button {
+    margin-left: 0.5rem;
+  }
+}
+
+.options {
+  .positive {
+    width: 15rem;
+  }
+}
+
+.action {
+  display: flex;
+  justify-content: center;
+  padding: 1rem 0;
 }

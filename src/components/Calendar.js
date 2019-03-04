@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import dateFns from 'date-fns';
 import './Calendar.css';
+import { Transition } from 'semantic-ui-react';
 import tourService from '../lib/tourService';
 
 class Calendar extends Component {
@@ -30,13 +31,6 @@ class Calendar extends Component {
       return dateFns.isEqual(formattedTourDate, formattedInputDate);
     });
   }
-
-  // updateCurrentDay = (day) => {
-  //   console.log('yeasss')
-  //   this.setState({
-  //     currentDay: day,
-  //   });
-  // }
 
   renderHeader() {
     const dateFormat = "MMM YYYY";
@@ -147,7 +141,9 @@ class Calendar extends Component {
       <div className="calendar">
         {this.renderHeader()}
         {this.renderDays()}
-        {hasLoadedTours && this.renderCells()}
+        <Transition.Group animation='fade' duration={500}>
+          {hasLoadedTours && this.renderCells()}    
+        </Transition.Group> 
       </div>
     )
   }
