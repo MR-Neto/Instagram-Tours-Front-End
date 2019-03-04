@@ -33,6 +33,7 @@ class Slideshow extends Component {
             });
           })
           .catch(error => console.log(error));
+
     }
   }
 
@@ -66,23 +67,20 @@ class Slideshow extends Component {
     if(places.length > 0) {
       return (
         <div className="slideshow">
-          <div className="buttons">
-            <button onClick={() => this.prevPlace()}
-            disabled={place.index === 0}>
-              Prev
-            </button>
-            <button onClick={() => this.nextPlace()}
-            disabled={place.index === places.length - 1}
-            >
-              Next
-            </button>   
-          </div>
           <div className={`cards-slider active-slide-${place.index}`}>
             <div className="cards-slider-wrapper" style={{
               'transform': `translateX(-${place.index*(100/places.length)}%)`
             }}>
               {this.renderAllPlaces(places)}
             </div>
+          </div>
+          <div className="buttons">
+            <button onClick={() => this.prevPlace()} disabled={place.index === 0}>
+              Prev
+            </button>
+            <button onClick={() => this.nextPlace()} disabled={place.index === places.length - 1}>
+              Next
+            </button>   
           </div>
         </div>
       );

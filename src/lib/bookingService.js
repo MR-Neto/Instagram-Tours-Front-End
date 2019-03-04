@@ -43,6 +43,6 @@ class BookingService {
   }
 }
 
-const booking = new BookingService('', [], 0, 0);
+const booking = new BookingService('', [], 1, 0);
 
 export default booking;

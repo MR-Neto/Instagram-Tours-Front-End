@@ -1,0 +1,16 @@
+.number-of-tickets {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  .input {
+    width: 13%;
+  }
+  .button {
+    margin-right: 1rem;
+    margin-left: 1rem;
+  }
+  p {
+    font-size: 1.5rem;
+    margin-right: 1rem;
+  }
+}

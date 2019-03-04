@@ -15,7 +15,6 @@ class PlacesService {
   }
 
   getPlacesById(arrayOfid) {
-
     return this.api.get(`/places?id=${JSON.stringify(arrayOfid)}`)
       .then(({ data }) => data)
       .catch((error) => console.log(error));
