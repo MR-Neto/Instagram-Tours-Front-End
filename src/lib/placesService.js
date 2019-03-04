@@ -14,8 +14,9 @@ class PlacesService {
       .catch((err) => console.log("Error: ", err));
   }
 
-  getPlaceById(id) {
-    return this.api.get(`/places?id=${id}`)
+  getPlacesById(arrayOfid) {
+
+    return this.api.get(`/places?id=${JSON.stringify(arrayOfid)}`)
       .then(({ data }) => data)
       .catch((error) => console.log(error));
   }

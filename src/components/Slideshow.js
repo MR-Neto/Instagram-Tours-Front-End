@@ -17,7 +17,6 @@ class Slideshow extends Component {
   componentDidMount() {
     if(this.props.hasAllPlaces) {
       placesService.getAllPlaces()
-        
         .then((places) => {
           this.setState({
             places,
@@ -26,17 +25,14 @@ class Slideshow extends Component {
         })
         .catch(error => console.log(error));
     } else {
-      let pickedPlaces = [];
-      bookingService.placesPicked.forEach(async (id, index) => {
-        const place = await placesService.getPlaceById(id);
-        place.index = index;
-        pickedPlaces.push(place);
-      });
-      console.log('PICKED PLACES', pickedPlaces);
-      this.setState({
-        places: pickedPlaces,
-        place: pickedPlaces[0],
-      });
+        placesService.getPlacesById(bookingService.placesPicked)
+          .then((places) => {
+            this.setState({
+              places,
+              place: places[0],
+            });
+          })
+          .catch(error => console.log(error));
     }
   }
 

@@ -67,6 +67,7 @@ class Cart extends Component {
     return (
       <div>
         <Navbar />
+        <Slideshow hasAllPlaces={false}/>
         <button onClick={this.updateStageHandler}>Back</button>
         <h2>Your tour</h2>
         {/* <Slideshow hasAllPlaces={false}/> */}
