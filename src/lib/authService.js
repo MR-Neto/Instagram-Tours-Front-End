@@ -10,24 +10,10 @@ class AuthService {
 
   signup(user) {
     return this.auth.post('/auth/signup', user)
-      .then(({ data }) => {
-        console.log('Sign up successful');
-        return data;
-      })
-      .catch((err) => {
-        console.log("Error: ", err)
-      });
   }
 
   login(user) {
-    return this.auth.post('/auth/login', user)
-      .then(({ data }) => {
-        console.log('Login successful');
-        return data;
-      })
-      .catch((err) => {
-        console.log("Error: ", err)
-      });
+    return this.auth.post('/auth/login', user);
   }
 
   logout() {

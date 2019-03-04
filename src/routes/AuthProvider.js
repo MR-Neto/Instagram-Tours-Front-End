@@ -5,7 +5,7 @@ export const AuthContext = React.createContext(
   // authStore // default value
 );
 
-export const { Provider, Consumer }  = AuthContext;
+export const { Provider, Consumer } = AuthContext;
 
 export const withAuth = (Comp) => {
   return class WithAuth extends Component {
@@ -13,7 +13,7 @@ export const withAuth = (Comp) => {
       return (
         <Consumer>
           {(authStore) => {
-            return <Comp 
+            return <Comp
               isLogged={authStore.isLogged}
               user={authStore.user}
               logout={authStore.logout}
@@ -23,7 +23,7 @@ export const withAuth = (Comp) => {
           }}
         </Consumer>
       )
-    }    
+    }
   }
 }
 
@@ -40,38 +40,44 @@ export default class AuthProvider extends Component {
       user,
     })
   }
-  
+
   loginUser = (body) => {
     return authService.login(body)
-    .then((user) => {
-      this.setUser(user);
-    })
-    .catch(error => console.log(error))
+      .then(({ data }) => {
+        this.setUser(data);
+        return data;
+      })
+      .catch(error => {
+        return error.response.data;
+      });
   }
-  
+
   signupUser = (body) => {
     return authService.signup(body)
-    .then((user) => {
-      this.setUser(user);
-    })
-    .catch(error => console.log(error))
+      .then(({ data }) => {
+        this.setUser(data);
+        return data;
+      })
+      .catch(error => {
+        return error.response.data;
+      });
   }
-  
+
   logoutUser = () => {
     return authService.logout()
       .then(() => {
-        this.setState({ 
+        this.setState({
           isLogged: false,
           user: {},
         });
       })
-      .catch( error => console.log(error))
+      .catch(error => console.log(error));
   }
 
   componentDidMount() {
     authService.me()
-    .then((user) => {
-        if(user){
+      .then((user) => {
+        if (user) {
           this.setState({
             isLogged: true,
             user,
@@ -85,7 +91,7 @@ export default class AuthProvider extends Component {
         }
       })
       .catch((error) => {
-        this.setState({ 
+        this.setState({
           isLogged: false,
           user: {},
           status: 'loaded'
@@ -102,14 +108,15 @@ export default class AuthProvider extends Component {
       default:
         return (
           <Provider value={
-            { isLogged,
+            {
+              isLogged,
               user,
-              logout: this.logoutUser, 
+              logout: this.logoutUser,
               login: this.loginUser,
               signup: this.signupUser,
             }}>
             {children}
-          </Provider>    
+          </Provider>
         );
     }
   }

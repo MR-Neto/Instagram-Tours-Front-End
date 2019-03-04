@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import Navbar from "../components/Navbar";
 import { withAuth } from "../routes/AuthProvider";
+import GoogleLogin from 'react-google-login';
+import { Message } from 'semantic-ui-react'
+
 
 class Form extends Component {
   state = {
@@ -9,26 +12,38 @@ class Form extends Component {
     name: "",
     phoneNumber: "",
     mode: "login",
+    messageVisible: false,
+    messageText: "",
   };
 
   handleFormSubmit = event => {
     const { mode } = this.state;
     if (mode === 'signup') {
       const { username, password, name, phoneNumber } = this.state;
-      this.props
-        .signup({ username, password, name, phoneNumber })
-        .then(() => {
-          this.props.history.goBack();
+      this.props.signup({ username, password, name, phoneNumber })
+        .then((signupResponse) => {
+          if (signupResponse === "success") {
+            this.props.history.goBack();
+          } else {
+            this.setState({
+              messageVisible: true,
+              messageText: signupResponse.code
+            });
+          }
         })
-        .catch(error => console.log(error));
     } else {
       const { username, password } = this.state;
-      this.props
-        .login({ username, password })
-        .then(() => {
-          this.props.history.goBack();
+      this.props.login({ username, password })
+        .then((loginResponse) => {
+          if (loginResponse === "success") {
+            this.props.history.goBack();
+          } else {
+            this.setState({
+              messageVisible: true,
+              messageText: loginResponse.code
+            });
+          }
         })
-        .catch(error => console.log(error));
     }
   };
 
@@ -37,9 +52,11 @@ class Form extends Component {
     this.setState({ [name]: value });
   };
 
+  responseGoogle = (response) => {
+  }
+
   renderSignUp = () => {
     const { phoneNumber, name, mode } = this.state;
-
     if (mode === "signup") {
       return (
         <div>
@@ -53,14 +70,26 @@ class Form extends Component {
   };
 
   singUpForm = () => {
-    this.setState({ mode: "signup" });
+    this.setState({ 
+      mode: "signup",
+      messageVisible: false,
+      messageText: "", 
+    });
   }
   loginForm = () => {
-    this.setState({ mode: "login" });
+    this.setState({ 
+      mode: "login",
+      messageVisible: false,
+      messageText: "",
+    });
+  }
+
+  handleDismiss = () => {
+    this.setState({ messageVisible: false });
   }
 
   render() {
-    const { username, password, mode } = this.state;
+    const { username, password, mode, messageVisible, messageText } = this.state;
 
     return (
       <div>
@@ -72,9 +101,15 @@ class Form extends Component {
         {this.renderSignUp()}
         {mode === "login" && <button name="login" onClick={this.handleFormSubmit}>Log In</button>}
         <button name="signup" onClick={(mode === "login") ? this.singUpForm : this.handleFormSubmit}>Sign Up</button>
-        <button name="signupGoogle" onClick={this.handleFormSubmit}>Google</button>
+        <GoogleLogin
+          clientId="658977310896-knrl3gka66fldh83dao2rhgbblmd4un9.apps.googleusercontent.com"
+          buttonText="Login"
+          onSuccess={this.responseGoogle}
+          onFailure={this.responseGoogle}
+        />
         <button name="signupFacebook" onClick={this.handleFormSubmit}>Facebook</button>
         {mode === "signup" && <button name="login" onClick={this.loginForm}>Log In</button>}
+        {messageVisible && <Message negative onDismiss={this.handleDismiss} header={messageText} />}
       </div>
     );
   }
