@@ -8,11 +8,13 @@ import Slideshow from '../components/Slideshow';
 import { injectStripe } from 'react-stripe-elements';
 import { CardElement } from 'react-stripe-elements';
 import dateFns from 'date-fns';
+import './Cart.css';
+
 
 class Cart extends Component {
 
-  state ={
-    message:""
+  state = {
+    message: ""
   }
 
   updateStageHandler = () => {
@@ -25,7 +27,7 @@ class Cart extends Component {
       if (this.props.isLogged) {
         const { date, numberOfTickets, placesPicked } = bookingService;
         const { token } = await this.props.stripe.createToken({ name: 'Jenny Rosen' });
-        console.log("FRONT END TOKEN:",token);
+        console.log("FRONT END TOKEN:", token);
         const booking = {
           details: {
             date,
@@ -38,21 +40,21 @@ class Cart extends Component {
           token,
         };
         console.log(booking);
-        
+
         const responseMakeBooking = await tourService.makeBooking(booking);
         console.log("Response MakingBooking ", responseMakeBooking);
         if (responseMakeBooking === 'successful booking') {
           bookingService.clearValues();
           this.props.history.push('/profile');
-        } else if (responseMakeBooking === 'payment unsuccessful') { 
+        } else if (responseMakeBooking === 'payment unsuccessful') {
           this.setState({
-            message:"payment unsuccessful"
+            message: "payment unsuccessful"
           });
-        } else if (responseMakeBooking === 'tour is full') { 
+        } else if (responseMakeBooking === 'tour is full') {
           this.setState({
-            message:"tour is full"
+            message: "tour is full"
           });
-        } 
+        }
       } else {
         this.props.history.push('/auth/login');
       }
@@ -66,8 +68,10 @@ class Cart extends Component {
 
     return (
       <div>
-        <Navbar />
-        <Slideshow hasAllPlaces={false}/>
+        <div className='topbar'>
+          <Navbar />
+        </div>
+        <Slideshow hasAllPlaces={false} />
         <button onClick={this.updateStageHandler}>Back</button>
         <h2>Your tour</h2>
         {/* <Slideshow hasAllPlaces={false}/> */}

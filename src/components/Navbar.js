@@ -2,16 +2,10 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { withAuth } from "../routes/AuthProvider";
 import { Dropdown, Menu } from "semantic-ui-react";
+import './Navbar.css';
+
 
 class Navbar extends Component {
-
-  state = {
-    visible: false,
-  }
-
-  handleHideClick = () => this.setState({ visible: false })
-  handleShowClick = () => this.setState({ visible: true })
-  handleSidebarHide = () => this.setState({ visible: false })
 
   MenuExampleAttached = (isLogged) => {
     if (isLogged) {
@@ -41,21 +35,26 @@ class Navbar extends Component {
     const { isLogged } = this.props;
 
     return (
-      <nav>
-        <Menu attached="top">
-          <Dropdown item icon="bars" simple>
-            <Dropdown.Menu>
-              <Dropdown.Item>
-                <Link to="/">Home</Link>
-              </Dropdown.Item>
-              <Dropdown.Item>
-                <Link to="/book">Book tour</Link>
-              </Dropdown.Item>
-              {this.MenuExampleAttached(isLogged)}
-            </Dropdown.Menu>
-          </Dropdown>
-        </Menu>
-      </nav>
+      <Dropdown icon="bars" medium id='burger-menu'>
+        <Dropdown.Menu>
+          <Dropdown.Item>
+            <Link to="/">Home</Link>
+          </Dropdown.Item>
+          <Dropdown.Item>
+            <Link to="/book">Book tour</Link>
+          </Dropdown.Item>
+          <Dropdown.Item>
+            {isLogged && <Link to="/profile">Profile</Link>}
+            {!isLogged && <Link to="/auth">Log In</Link>}
+          </Dropdown.Item>
+          {isLogged && <Dropdown.Divider />}
+          {isLogged &&
+            <Dropdown.Item>
+              <button onClick={this.props.logout}>Log Out</button>
+            </Dropdown.Item>
+          }
+        </Dropdown.Menu>
+      </Dropdown>
     );
   }
 }

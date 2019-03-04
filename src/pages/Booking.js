@@ -24,12 +24,12 @@ class Booking extends Component {
 
     const { value } = e.target;
     const { numberOfTickets, capacity } = this.state;
-    if(numberOfTickets >= 1 && numberOfTickets <= capacity) {
+    if (numberOfTickets >= 1 && numberOfTickets <= capacity) {
       this.setState({
         numberOfTickets: value,
       });
     } else {
-      this.setState({ 
+      this.setState({
         messageVisible: true,
         messageText: `Number of tickets must be min 1 and max ${capacity}`
       });
@@ -44,12 +44,12 @@ class Booking extends Component {
 
   decreaseNumberOfTickets = () => {
     const { numberOfTickets, capacity } = this.state;
-    if(numberOfTickets > 1) {
+    if (numberOfTickets > 1) {
       this.setState({
         numberOfTickets: numberOfTickets - 1,
       });
     } else {
-      this.setState({ 
+      this.setState({
         messageVisible: true,
         messageText: `Number of tickets must be min 1 and max ${capacity}`
       });
@@ -58,12 +58,12 @@ class Booking extends Component {
 
   increaseNumberOfTickets = () => {
     const { numberOfTickets, capacity } = this.state;
-    if(numberOfTickets < capacity) {
+    if (numberOfTickets < capacity) {
       this.setState({
         numberOfTickets: numberOfTickets + 1,
       });
     } else {
-      this.setState({ 
+      this.setState({
         messageVisible: true,
         messageText: `Number of tickets must be min 1 and max ${capacity}`
       });
@@ -93,16 +93,18 @@ class Booking extends Component {
 
     return (
       <div>
-        <Navbar />
-        <Calendar updateSelectedDateHandler={this.updateSelectedDate}/>
+        <div className="topbar">
+          <Navbar />
+        </div>
+        <Calendar updateSelectedDateHandler={this.updateSelectedDate} />
         <h2>Pick 5 locations</h2>
-        <Slideshow hasAllPlaces={true}/>
+        <Slideshow hasAllPlaces={true} />
         <div>
           <div className="number-of-tickets">
             <div>
               <Button circular icon='minus' onClick={this.decreaseNumberOfTickets} />
               <Input placeholder='No of people' name="numberOfTickets" value={numberOfTickets} onChange={this.handleChangeInput} />
-              <Button circular icon='plus' onClick={this.increaseNumberOfTickets}/>
+              <Button circular icon='plus' onClick={this.increaseNumberOfTickets} />
             </div>
             <p>Price: {25 * numberOfTickets} €</p>
           </div>
@@ -110,7 +112,7 @@ class Booking extends Component {
           <Transition.Group animation='fade' duration={500}>
             {messageVisible && <Message negative onDismiss={this.handleDismiss} header={messageText} />}
           </Transition.Group>
-          
+
           <Button onClick={this.updateStageHandler}>Confirm</Button>
         </div>
       </div>
