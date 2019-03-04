@@ -5,7 +5,7 @@ import { Dropdown, Menu } from "semantic-ui-react";
 
 class Navbar extends Component {
 
-  state = { 
+  state = {
     visible: false,
   }
 
@@ -14,9 +14,12 @@ class Navbar extends Component {
   handleSidebarHide = () => this.setState({ visible: false })
 
   MenuExampleAttached = (isLogged) => {
-    if(isLogged) {
+    if (isLogged) {
       return (
         <div>
+          <Dropdown.Item>
+            <Link to="/profile">Profile</Link>
+          </Dropdown.Item>
           <Dropdown.Divider />
           <Dropdown.Item>
             <button onClick={this.props.logout}>Log Out</button>
@@ -29,10 +32,7 @@ class Navbar extends Component {
           <Dropdown.Item>
             <Link to="/auth">Log In</Link>
           </Dropdown.Item>
-          <Dropdown.Item>
-            <Link to="/auth">Sign Up</Link>
-          </Dropdown.Item>
-        </div> 
+        </div>
       );
     }
   };
@@ -51,7 +51,7 @@ class Navbar extends Component {
               <Dropdown.Item>
                 <Link to="/book">Book tour</Link>
               </Dropdown.Item>
-              {this.MenuExampleAttached(isLogged)}  
+              {this.MenuExampleAttached(isLogged)}
             </Dropdown.Menu>
           </Dropdown>
         </Menu>

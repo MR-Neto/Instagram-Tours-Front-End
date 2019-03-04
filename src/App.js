@@ -4,7 +4,7 @@ import AuthProvider from './routes/AuthProvider';
 import PrivateRoute from './routes/PrivateRoute';
 import AnonRoute from './routes/AnonRoute';
 import Home from './pages/Home';
-import Form from './pages/Form';
+import FormView from './pages/FormView';
 import Profile from './pages/Profile';
 import BookingController from './pages/BookingController';
 import placesService from './lib/placesService';
@@ -29,7 +29,7 @@ class App extends Component {
       <AuthProvider>
         <div className="container">
           <Switch>
-            <AnonRoute path="/auth" component={Form} />
+            <AnonRoute path="/auth" component={FormView} />
             <PrivateRoute path="/profile" component={Profile} />
             <Route path="/book" component={BookingController} AppState = {this.state} />
             <Route path="/" component={Home} />
