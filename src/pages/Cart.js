@@ -42,8 +42,9 @@ class Cart extends Component {
     try {
       if (isLogged) {
         const { date, numberOfTickets, placesPicked: places } = bookingService;
-        const { data } = await stripe.createToken({ name: 'Jenny Rosen' });
-        const token = data.id;
+        const data = await stripe.createToken({ name: 'Jenny Rosen' });
+        console.log("data ",data);
+        const token = data.token.id;
         
         const user = {
           buyer: this.props.user._id,
