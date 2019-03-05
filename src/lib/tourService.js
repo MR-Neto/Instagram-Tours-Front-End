@@ -10,10 +10,12 @@ class TourService {
 
   getAllTours() {
     return this.api.get('/tours')
-      .then(({ data }) => data)
-      .catch((err) => {
-        console.log("Error: ", err)
-      });
+      .then(({ data }) => data);
+  }
+  
+  getBookedToursByUser(userId) {
+    return this.api.get(`/${userId}/bookedtours`)
+      .then(({ data }) => data);
   }
 
   makeBooking(booking) {
@@ -29,14 +31,6 @@ class TourService {
         } else {
           console.log("Error: ", err)
         }
-      });
-  }
-
-  getBookedToursByUser(userId) {
-    return this.api.get(`/${userId}/bookedtours`)
-      .then(({ data }) => data)
-      .catch((err) => {
-        console.log("Error: ", err)
       });
   }
 }

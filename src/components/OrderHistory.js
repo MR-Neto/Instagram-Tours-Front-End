@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { List } from 'semantic-ui-react';
 import tourService from '../lib/tourService';
-import { withAuth } from '../routes/AuthProvider';
+import { withAuth } from '../components/AuthProvider';
 
 const STATUS = {
   LOADING: 'loading',
@@ -19,7 +19,6 @@ class OrderHistory extends Component {
   }
 
   renderBookedTours() {
-    console.log(this.state.tours)
     return this.state.tours.map((tour) => {
       return (
         <List.Item key={tour._id}>

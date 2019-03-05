@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Button, Message, Transition, Divider } from 'semantic-ui-react';
 import Navbar from '../components/Navbar';
-import { withAuth } from '../routes/AuthProvider';
+import { withAuth } from '../components/AuthProvider';
 import bookingService from '../lib/bookingService';
 import tourService from '../lib/tourService';
 import Calendar from '../components/Calendar';

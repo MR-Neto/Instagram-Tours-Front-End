@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './Slideshow.scss';
 import Place from './Place';
+import { Button, Icon } from 'semantic-ui-react';
 import placesService from '../lib/placesService';
 import bookingService from '../lib/bookingService';
 
@@ -75,12 +76,12 @@ class Slideshow extends Component {
             </div>
           </div>
           <div className="buttons">
-            <button onClick={() => this.prevPlace()} disabled={place.index === 0}>
-              Prev
-            </button>
-            <button onClick={() => this.nextPlace()} disabled={place.index === places.length - 1}>
-              Next
-            </button>   
+            <Button icon onClick={() => this.prevPlace()} disabled={place.index === 0}>
+              <Icon name='arrow left' />
+            </Button>
+            <Button icon onClick={() => this.nextPlace()} disabled={place.index === places.length - 1}>
+              <Icon name='arrow right' />
+            </Button> 
           </div>
         </div>
       );

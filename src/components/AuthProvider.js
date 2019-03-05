@@ -47,9 +47,6 @@ export default class AuthProvider extends Component {
         this.setUser(data);
         return data;
       })
-      .catch(error => {
-        return error.response.data;
-      });
   }
 
   signupUser = (body) => {
@@ -58,9 +55,6 @@ export default class AuthProvider extends Component {
         this.setUser(data);
         return data;
       })
-      .catch(error => {
-        return error.response.data;
-      });
   }
 
   logoutUser = () => {
