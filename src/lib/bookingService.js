@@ -17,6 +17,10 @@ class BookingService {
     }
   }
 
+  resetPlacesPicked() {
+    this.placesPicked = [];
+  }
+
   togglePlacesPicked(placeId) {
     const { placesPicked } = this;
     if(placesPicked.includes(placeId)) {

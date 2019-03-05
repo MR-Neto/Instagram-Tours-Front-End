@@ -34,7 +34,6 @@ class Slideshow extends Component {
             });
           })
           .catch(error => console.log(error));
-
     }
   }
 
@@ -57,7 +56,7 @@ class Slideshow extends Component {
   renderAllPlaces = (places) => {
     return places.map((place) => {
       return (
-        <Place key={place._id} place={place} />
+        <Place key={place._id} place={place} readOnly={this.props.readOnly} />
         );
     });
   }
@@ -70,8 +69,7 @@ class Slideshow extends Component {
         <div className="slideshow">
           <div className={`cards-slider active-slide-${place.index}`}>
             <div className="cards-slider-wrapper" style={{
-              'transform': `translateX(-${place.index*(100/places.length)}%)`
-            }}>
+              'transform': `translateX(-${place.index*(100/places.length)}%)`}}>
               {this.renderAllPlaces(places)}
             </div>
           </div>

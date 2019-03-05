@@ -6,6 +6,7 @@ import bookingService from '../lib/bookingService';
 import tourService from '../lib/tourService';
 import Calendar from '../components/Calendar';
 import Slideshow from '../components/Slideshow';
+import dateFns from 'date-fns';
 import './Booking.scss';
 
 class Booking extends Component {
@@ -96,12 +97,19 @@ class Booking extends Component {
   }
 
   render() {
-    const { numberOfTickets,
+    const { date,
+            numberOfTickets,
             messageVisible, 
             messageText, 
             calendarVisibility,
             guestsVisibility,
           } = this.state;
+    let formattedDate;
+    if(date) {
+      formattedDate = dateFns.format(date, 'D MMM');
+    } else {
+      formattedDate = 'Dates';
+    }
 
     return (
       <div>
@@ -110,13 +118,14 @@ class Booking extends Component {
         </div>
         <div className="filters">
           <div>
-            <Button basic onClick={this.toggleVisibilityCalendar}>Dates</Button>
+            <Button basic onClick={this.toggleVisibilityCalendar}>{formattedDate}</Button>
             <Button basic onClick={this.toggleVisibilityGuests}>Guests</Button>
           </div>
           <Button positive onClick={this.updateStageHandler}>Confirm</Button>
         </div>
         <Divider fitted/>
         {calendarVisibility && <Calendar updateSelectedDateHandler={this.updateSelectedDate}/>}
+        <Slideshow hasAllPlaces={true} readOnly={false}/> 
         <div className="options">
             {guestsVisibility && 
             <div className="number-of-tickets">
@@ -128,7 +137,6 @@ class Booking extends Component {
             {messageVisible && <Message negative onDismiss={this.handleDismiss} header={messageText} />}
           </Transition.Group>
         </div>
-        <Slideshow hasAllPlaces={true}/> 
       </div>
     );
   }
