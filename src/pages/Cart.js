@@ -106,8 +106,8 @@ class Cart extends Component {
         <Button basic onClick={this.updateStageHandler}>Back</Button>
         <Button positive onClick={this.makeBookingHandler}>Book</Button>
         {messageText &&
-          <Message {...messageType} onDismiss={this.handleDismiss}>
-            <Message.Header>You are eligible for a reward</Message.Header>
+          <Message negative={messageType==='negative'} positive={messageType==='positive'} onDismiss={this.handleDismiss}>
+            <Message.Header>{messageText}</Message.Header>
           </Message>
         }
       </div >
