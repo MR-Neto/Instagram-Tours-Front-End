@@ -8,6 +8,7 @@ import Slideshow from '../components/Slideshow';
 import { injectStripe } from 'react-stripe-elements';
 import { compose } from 'recompose';
 import { CardElement } from 'react-stripe-elements';
+import { Button } from 'semantic-ui-react'
 import dateFns from 'date-fns';
 import './Cart.css';
 
@@ -38,7 +39,7 @@ class Cart extends Component {
   }
 
   makeBookingHandler = async () => {
-    const { isLogged, stripe} = this.props;
+    const { isLogged, stripe } = this.props;
 
     try {
       if (isLogged) {
@@ -46,11 +47,11 @@ class Cart extends Component {
         const { name } = this.props.user;
 
         const data = await stripe.createToken({
-           name 
+          name
         });
 
         const token = data.token.id;
-        
+
         const user = {
           buyer: this.props.user._id,
           numberOfTickets,
@@ -80,16 +81,15 @@ class Cart extends Component {
         <div className='topbar'>
           <Navbar />
         </div>
-        <Slideshow hasAllPlaces={false} readOnly={true}/>
-        <button onClick={this.updateStageHandler}>Back</button>
+        <Slideshow hasAllPlaces={false} readOnly={true} />
         <h2>Your tour</h2>
         {/* <Slideshow hasAllPlaces={false}/> */}
         <p>Date: {dateFns.format(date, 'D MMMM YYYY')}</p>
         <p>People: {numberOfTickets}</p>
-        <p>Price: 40 €</p>
+        <p>Price: {numberOfTickets * 25}€</p>
         {this.props.isLogged && <CardElement style={{ base: { fontSize: '18px' } }} />}
-        <button>Book as guest</button>
-        <button onClick={this.makeBookingHandler}>Book</button>
+        <Button basic onClick={this.updateStageHandler}>Back</Button>
+        <Button positive onClick={this.makeBookingHandler}>Book</Button>
         <p>{this.state.message}</p>
       </div >
     )

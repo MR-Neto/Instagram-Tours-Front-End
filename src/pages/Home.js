@@ -31,7 +31,7 @@ class Home extends Component {
                 <Navbar />
                 </div>
                 <div className="title">
-                  <i>Discover Barcelona Top Instagram Places</i>
+                  <p>Discover Barcelona Top Instagram Places</p>
                 </div>
                 <Link to="/book">
                   <Button size='big' primary>
