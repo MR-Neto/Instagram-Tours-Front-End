@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Message, Transition, Divider } from 'semantic-ui-react';
+import { Button, Message, Transition, Divider, Popup } from 'semantic-ui-react';
 import Navbar from '../components/Navbar';
 import { withAuth } from '../components/AuthProvider';
 import bookingService from '../lib/bookingService';
@@ -20,7 +20,7 @@ class Booking extends Component {
     messageVisible: false,
     messageText: '',
     calendarVisibility: false,
-    guestsVisibility: false,
+    popUpOpened: false,
   }
 
   updateSelectedDate = date => {
@@ -34,11 +34,7 @@ class Booking extends Component {
     if (numberOfTickets > 1) {
       this.setState({
         numberOfTickets: numberOfTickets - 1,
-      });
-    } else {
-      this.setState({
-        messageVisible: true,
-        messageText: `Number of tickets must be min 1 and max ${capacity}`
+        popUpOpened: true,
       });
     }
   }
@@ -48,11 +44,13 @@ class Booking extends Component {
     if (numberOfTickets < capacity) {
       this.setState({
         numberOfTickets: numberOfTickets + 1,
+        popUpOpened: true,
       });
     } else {
       this.setState({
         messageVisible: true,
-        messageText: `Number of tickets must be min 1 and max ${capacity}`
+        messageText: `Max ${capacity} persons per tour`,
+        popUpOpened: true,
       });
     }
   }
@@ -65,7 +63,7 @@ class Booking extends Component {
     const { date, placesPicked, numberOfTickets } = this.state;
     this.props.updateStage({
       date,
-      placesPicked, 
+      placesPicked,
       numberOfTickets,
     }, 1);
   }
@@ -78,11 +76,17 @@ class Booking extends Component {
     });
   }
 
-  toggleVisibilityGuests = () => {
-    const { guestsVisibility } = this.state;
+  showGuests = () => {
     this.setState({
       calendarVisibility: false,
-      guestsVisibility: !guestsVisibility,
+      popUpOpened: true,
+    });
+  }
+
+  hideGuests = () => {
+    this.setState({
+      calendarVisibility: false,
+      popUpOpened: false,
     });
   }
 
@@ -98,14 +102,14 @@ class Booking extends Component {
 
   render() {
     const { date,
-            numberOfTickets,
-            messageVisible, 
-            messageText, 
-            calendarVisibility,
-            guestsVisibility,
-          } = this.state;
+      numberOfTickets,
+      messageVisible,
+      messageText,
+      calendarVisibility,
+      popUpOpened,
+    } = this.state;
     let formattedDate;
-    if(date) {
+    if (date) {
       formattedDate = dateFns.format(date, 'D MMM');
     } else {
       formattedDate = 'Dates';
@@ -119,24 +123,29 @@ class Booking extends Component {
         <div className="filters">
           <div>
             <Button basic onClick={this.toggleVisibilityCalendar}>{formattedDate}</Button>
-            <Button basic onClick={this.toggleVisibilityGuests}>Guests</Button>
+            <Popup
+              trigger={<Button basic>{(numberOfTickets !== bookingService.numberOfTickets) ? `Persons: ${numberOfTickets}` : 'Persons'}</Button>}
+              on='click'
+              size='small'
+              position='bottom center'
+              onClose={this.hideGuests}
+              onOpen={this.showGuests}
+            >
+              <div className="number-of-tickets">
+                <Button circular icon='minus' onClick={this.decreaseNumberOfTickets} />
+                <p>{numberOfTickets}</p>
+                <Button circular icon='plus' onClick={this.increaseNumberOfTickets} />
+              </div>
+              <Transition.Group animation='fade' duration={500}>
+                {messageVisible && <Message size='tiny' negative onDismiss={this.handleDismiss} header={messageText} />}
+              </Transition.Group>
+            </Popup>
           </div>
           <Button positive onClick={this.updateStageHandler}>Confirm</Button>
         </div>
-        <Divider fitted/>
-        {calendarVisibility && <Calendar updateSelectedDateHandler={this.updateSelectedDate}/>}
-        <Slideshow hasAllPlaces={true} readOnly={false}/> 
-        <div className="options">
-            {guestsVisibility && 
-            <div className="number-of-tickets">
-              <Button circular icon='minus' onClick={this.decreaseNumberOfTickets} />
-              <p>{numberOfTickets}</p>
-              <Button circular icon='plus' onClick={this.increaseNumberOfTickets}/> 
-            </div>}
-          <Transition.Group animation='fade' duration={500}>
-            {messageVisible && <Message negative onDismiss={this.handleDismiss} header={messageText} />}
-          </Transition.Group>
-        </div>
+        <Divider fitted />
+        {calendarVisibility && <Calendar updateSelectedDateHandler={this.updateSelectedDate} />}
+        <Slideshow hasAllPlaces={true} readOnly={false} />
       </div>
     );
   }
