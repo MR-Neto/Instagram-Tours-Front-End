@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
-import { withAuth } from '../routes/AuthProvider';
+import { withAuth } from '../components/AuthProvider';
 import './Home.css';
 import { Button } from 'semantic-ui-react'
 import { Transition } from 'semantic-ui-react'

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { withAuth } from '../routes/AuthProvider';
+import { withAuth } from '../components/AuthProvider';
 import { withRouter } from 'react-router-dom'
 import Navbar from '../components/Navbar';
 import bookingService from '../lib/bookingService';
@@ -11,7 +11,6 @@ import { CardElement } from 'react-stripe-elements';
 import dateFns from 'date-fns';
 import './Cart.css';
 
-
 class Cart extends Component {
 
   state = {
@@ -22,39 +21,37 @@ class Cart extends Component {
     this.props.updateStage(null, 0)
   }
 
+  validateBooking(responseMakeBooking) {
+    if (responseMakeBooking === 'successful booking') {
+      bookingService.clearValues();
+      this.props.history.push('/profile');
+    } else if (responseMakeBooking === 'payment unsuccessful') {
+      this.setState({
+        message: "payment unsuccessful"
+      });
+    } else if (responseMakeBooking === 'tour is full') {
+      this.setState({
+        message: "tour is full"
+      });
+    }
+  }
+
   makeBookingHandler = async () => {
     const { isLogged, stripe } = this.props;
 
     try {
       if (isLogged) {
         const { date, numberOfTickets, placesPicked: places } = bookingService;
-
         const { token } = await stripe.createToken({ name: 'Jenny Rosen' });
-        // console.log("FRONT END TOKEN:", token);
         const user = {
           buyer: this.props.user._id,
           numberOfTickets,
         }
-        // console.log(booking);
-
         const responseMakeBooking = await tourService.makeBooking({
           details: { date, user, places },
           token,
         });
-
-        console.log("Response MakingBooking ", responseMakeBooking);
-        if (responseMakeBooking === 'successful booking') {
-          bookingService.clearValues();
-          this.props.history.push('/profile');
-        } else if (responseMakeBooking === 'payment unsuccessful') {
-          this.setState({
-            message: "payment unsuccessful"
-          });
-        } else if (responseMakeBooking === 'tour is full') {
-          this.setState({
-            message: "tour is full"
-          });
-        }
+        this.validateBooking(responseMakeBooking);
       } else {
         console.log(this.props.location);
         this.props.history.push({

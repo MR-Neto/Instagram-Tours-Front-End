@@ -1,9 +1,10 @@
 .slideshow {
   overflow-x: hidden;
-  height: 50vh;
+  height: 35vh;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
+  padding-top: 1rem;
   .positive {
     margin-left: 4rem;
   }
@@ -15,6 +16,7 @@
   border-radius: 50%;
   height: 12rem;
   width: 12rem;
+  margin-right: 1rem;
   $border: 2px;
   background-clip: padding-box; /* !importanté */
   border: solid $border transparent; /* !importanté */
@@ -32,6 +34,12 @@
 
 .image {
   max-width: 100%;
+}
+
+.cards-slider {
+  position: relative;
+  max-width: 226px;
+  height: 100%;
 }
 
 .cards-slider-wrapper {
@@ -54,7 +62,10 @@ $i: 0;
   }
 }
 
-.cards-slider {
-  position: relative;
-  max-width: 226px;
+.buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-top: 0.5rem;
 }
+
