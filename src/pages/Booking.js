@@ -124,7 +124,7 @@ class Booking extends Component {
           <div>
             <Button basic onClick={this.toggleVisibilityCalendar}>{formattedDate}</Button>
             <Popup
-              trigger={<Button basic>{(numberOfTickets !== bookingService.numberOfTickets) ? `Persons: ${numberOfTickets}` : 'Persons'}</Button>}
+              trigger={<Button basic>{`Persons: ${numberOfTickets}`}</Button>}
               on='click'
               size='small'
               position='bottom center'

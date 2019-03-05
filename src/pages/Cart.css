@@ -1,3 +1,30 @@
 .topbar{
   height: 50px;
 }
+
+.container-cart{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 15px;
+}
+
+#summary-card{
+  width: 100%;
+  width: 100%;
+  height: auto;
+}
+
+.card-place{
+  margin: 10px;
+}
+
+
+.grid-tour{
+  margin: 0 auto;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 50% 50%;
+  grid-column-gap: 0.25rem;
+  grid-row-gap: 2.5rem;
+}
