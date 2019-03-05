@@ -18,7 +18,8 @@ class Cart extends Component {
   }
 
   updateStageHandler = () => {
-    this.props.updateStage(null, 0)
+    this.props.updateStage(null, 0);
+    bookingService.resetPlacesPicked();
   }
 
   validateBooking(responseMakeBooking) {
@@ -72,7 +73,7 @@ class Cart extends Component {
         <div className='topbar'>
           <Navbar />
         </div>
-        <Slideshow hasAllPlaces={false} />
+        <Slideshow hasAllPlaces={false} readOnly={true}/>
         <button onClick={this.updateStageHandler}>Back</button>
         <h2>Your tour</h2>
         {/* <Slideshow hasAllPlaces={false}/> */}

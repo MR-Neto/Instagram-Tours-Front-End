@@ -161,7 +161,6 @@ class Calendar extends Component {
   };
 
   render() {
-    const hasLoadedTours = this.state.tours.length > 0;
     return (
       <div className="calendar">
         {this.renderHeader()}
