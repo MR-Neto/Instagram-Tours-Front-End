@@ -166,7 +166,7 @@ class Calendar extends Component {
         {this.renderHeader()}
         {this.renderDays()}
         <Transition.Group animation='fade' duration={500}>
-          {this.renderCells()}    
+          { this.renderCells()}    
         </Transition.Group> 
       </div>
     )

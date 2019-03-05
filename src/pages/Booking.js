@@ -1,22 +1,13 @@
-import React, { Component } from "react";
-import {
-  Button,
-  Message,
-  Transition,
-  Divider,
-  Card,
-  Image,
-  Icon,
-  Container,
-} from "semantic-ui-react";
-import Navbar from "../components/Navbar";
-import { withAuth } from "../components/AuthProvider";
-import bookingService from "../lib/bookingService";
-import tourService from "../lib/tourService";
-import Calendar from "../components/Calendar";
-import Slideshow from "../components/Slideshow";
-import dateFns from "date-fns";
-import "./Booking.scss";
+import React, { Component } from 'react';
+import { Button, Message, Transition, Divider, Popup, Card, Container, Icon, Image } from 'semantic-ui-react';
+import Navbar from '../components/Navbar';
+import { withAuth } from '../components/AuthProvider';
+import bookingService from '../lib/bookingService';
+import tourService from '../lib/tourService';
+import Calendar from '../components/Calendar';
+import Slideshow from '../components/Slideshow';
+import dateFns from 'date-fns';
+import './Booking.scss';
 
 class Booking extends Component {
   state = {
@@ -28,8 +19,8 @@ class Booking extends Component {
     messageVisible: false,
     messageText: "",
     calendarVisibility: false,
-    guestsVisibility: false
-  };
+    popUpOpened: false,
+  }
 
   updateSelectedDate = date => {
     this.setState({
@@ -38,32 +29,30 @@ class Booking extends Component {
   };
 
   decreaseNumberOfTickets = () => {
-    const { numberOfTickets, capacity } = this.state;
+    const { numberOfTickets } = this.state;
     if (numberOfTickets > 1) {
       this.setState({
-        numberOfTickets: numberOfTickets - 1
-      });
-    } else {
-      this.setState({
-        messageVisible: true,
-        messageText: `Number of tickets must be min 1 and max ${capacity}`
+        numberOfTickets: numberOfTickets - 1,
+        popUpOpened: true,
       });
     }
-  };
-
+  }
+ 
   increaseNumberOfTickets = () => {
     const { numberOfTickets, capacity } = this.state;
     if (numberOfTickets < capacity) {
       this.setState({
-        numberOfTickets: numberOfTickets + 1
+        numberOfTickets: numberOfTickets + 1,
+        popUpOpened: true,
       });
     } else {
       this.setState({
         messageVisible: true,
-        messageText: `Number of tickets must be min 1 and max ${capacity}`
+        messageText: `Max ${capacity} persons per tour`,
+        popUpOpened: true,
       });
     }
-  };
+  }
 
   handleDismiss = () => {
     this.setState({ messageVisible: false });
@@ -71,15 +60,12 @@ class Booking extends Component {
 
   updateStageHandler = () => {
     const { date, placesPicked, numberOfTickets } = this.state;
-    this.props.updateStage(
-      {
-        date,
-        placesPicked,
-        numberOfTickets
-      },
-      1
-    );
-  };
+    this.props.updateStage({
+      date,
+      placesPicked,
+      numberOfTickets,
+    }, 1);
+  }
 
   toggleVisibilityCalendar = () => {
     const { calendarVisibility } = this.state;
@@ -89,11 +75,17 @@ class Booking extends Component {
     });
   };
 
-  toggleVisibilityGuests = () => {
-    const { guestsVisibility } = this.state;
+  showGuests = () => {
     this.setState({
       calendarVisibility: false,
-      guestsVisibility: !guestsVisibility
+      popUpOpened: true,
+    });
+  }
+
+  hideGuests = () => {
+    this.setState({
+      calendarVisibility: false,
+      popUpOpened: false,
     });
   };
 
@@ -115,11 +107,12 @@ class Booking extends Component {
       messageVisible,
       messageText,
       calendarVisibility,
-      guestsVisibility
+      popUpOpened,
     } = this.state;
+    
     let formattedDate;
     if (date) {
-      formattedDate = dateFns.format(date, "D MMM");
+      formattedDate = dateFns.format(date, 'D MMM');
     } else {
       formattedDate = "Dates";
     }
@@ -131,12 +124,26 @@ class Booking extends Component {
         </div>
         <div className="filters">
           <div>
-            <Button basic color='#F2994A' onClick={this.toggleVisibilityCalendar}>
+            <Button basic onClick={this.toggleVisibilityCalendar}>
               {formattedDate}
             </Button>
-            <Button basic onClick={this.toggleVisibilityGuests}>
-              Guests
-            </Button>
+            <Popup
+              trigger={<Button basic>{`Persons: ${numberOfTickets}`}</Button>}
+              on='click'
+              size='small'
+              position='bottom center'
+              onClose={this.hideGuests}
+              onOpen={this.showGuests}
+            >
+              <div className="number-of-tickets">
+                <Button circular icon='minus' onClick={this.decreaseNumberOfTickets} />
+                <p>{numberOfTickets}</p>
+                <Button circular icon='plus' onClick={this.increaseNumberOfTickets} />
+              </div>
+              <Transition.Group animation='fade' duration={500}>
+                {messageVisible && <Message size='tiny' negative onDismiss={this.handleDismiss} header={messageText} />}
+              </Transition.Group>
+            </Popup>
           </div>
           <Button positive onClick={this.updateStageHandler}>
             Confirm
@@ -148,34 +155,6 @@ class Booking extends Component {
         )}
         <h2>Pick your places</h2>
         <Slideshow hasAllPlaces={true} readOnly={false} />
-        <div className="options">
-          {guestsVisibility && (
-            <div className="number-of-tickets">
-              <Button
-                basic
-                circular
-                icon="minus"
-                onClick={this.decreaseNumberOfTickets}
-              />
-              <p>{numberOfTickets}</p>
-              <Button
-                basic
-                circular
-                icon="plus"
-                onClick={this.increaseNumberOfTickets}
-              />
-            </div>
-          )}
-          <Transition.Group animation="fade" duration={500}>
-            {messageVisible && (
-              <Message
-                negative
-                onDismiss={this.handleDismiss}
-                header={messageText}
-              />
-            )}
-          </Transition.Group>
-        </div>
         <Container>
           <Card>
             <Image src="https://images.unsplash.com/photo-1531948371443-d5afa127f918?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80" />

@@ -1,14 +1,14 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { withAuth } from '../components/AuthProvider';
 import { withRouter } from 'react-router-dom'
 import Navbar from '../components/Navbar';
 import bookingService from '../lib/bookingService';
 import tourService from '../lib/tourService';
-import Slideshow from '../components/Slideshow';
+import placesService from '../lib/placesService';
 import { injectStripe } from 'react-stripe-elements';
 import { compose } from 'recompose';
 import { CardElement } from 'react-stripe-elements';
-import { Button, Message } from 'semantic-ui-react'
+import { Button, Message, Card, Grid, Image, Placeholder, Container } from 'semantic-ui-react'
 import dateFns from 'date-fns';
 import './Cart.css';
 
@@ -17,6 +17,8 @@ class Cart extends Component {
   state = {
     messageText: false,
     messageType: "",
+    places: [],
+    isloaded: false,
   }
 
   updateStageHandler = () => {
@@ -87,29 +89,127 @@ class Cart extends Component {
     }
   }
 
+  componentDidMount() {
+    placesService.getPlacesById(bookingService.placesPicked)
+      .then((places) => {
+        this.setState({
+          places,
+          isloaded: true,
+        });
+      })
+      .catch(error => console.log(error));
+  }
+
+  renderAllPlaces = () => {
+    return this.state.places.map((place) => {
+      return (
+        <Container>
+          <Card className='card-place'>
+            <Image src={place.imagesURL[0]} />
+            <Card.Content>
+              <Card.Header>{place.name}</Card.Header>
+            </Card.Content>
+          </Card>
+        </Container>
+      );
+    });
+  }
+
   render() {
     const { date, numberOfTickets } = bookingService;
-    const { messageText, messageType } = this.state;
+    const { messageText, messageType, isloaded } = this.state;
 
     return (
       <div>
         <div className='topbar'>
           <Navbar />
         </div>
-        <Slideshow hasAllPlaces={false} readOnly={true} />
-        <h2>Your tour</h2>
+        <div className='container-cart'>
+          <Card id='summary-card'>
+            <Card.Content header='Summary' />
+            <Card.Content>
+              <p>Date: {dateFns.format(date, 'D MMMM YYYY')}</p>
+              <p>Persons: {numberOfTickets}</p>
+              <p>Price: {numberOfTickets * 25}€</p>
+              {this.props.isLogged && <CardElement style={{ base: { fontSize: '18px' } }} />}
+              <Button basic onClick={this.updateStageHandler}>Back</Button>
+              <Button positive onClick={this.makeBookingHandler}>Book</Button>
+              {messageText &&
+                <Message negative={messageType === 'negative'} positive={messageType === 'positive'} onDismiss={this.handleDismiss}>
+                  <Message.Header>{messageText}</Message.Header>
+                </Message>
+              }
+            </Card.Content>
+          </Card>
+          <h2>Your tour</h2>
+          <div className='grid-tour'>
+            {isloaded ?
+              this.renderAllPlaces()
+              :
+              <Fragment>
+                <Card>
+                  <Placeholder>
+                    <Placeholder.Image square />
+                  </Placeholder>
+                  <Card.Content>
+                    <Placeholder>
+                      <Placeholder.Header>
+                        <Placeholder.Line length='very short' />
+                      </Placeholder.Header>
+                    </Placeholder>
+                  </Card.Content>
+                </Card>
+                <Card>
+                  <Placeholder>
+                    <Placeholder.Image square />
+                  </Placeholder>
+                  <Card.Content>
+                    <Placeholder>
+                      <Placeholder.Header>
+                        <Placeholder.Line length='very short' />
+                      </Placeholder.Header>
+                    </Placeholder>
+                  </Card.Content>
+                </Card>
+                <Card>
+                  <Placeholder>
+                    <Placeholder.Image square />
+                  </Placeholder>
+                  <Card.Content>
+                    <Placeholder>
+                      <Placeholder.Header>
+                        <Placeholder.Line length='very short' />
+                      </Placeholder.Header>
+                    </Placeholder>
+                  </Card.Content>
+                </Card>
+                <Card>
+                  <Placeholder>
+                    <Placeholder.Image square />
+                  </Placeholder>
+                  <Card.Content>
+                    <Placeholder>
+                      <Placeholder.Header>
+                        <Placeholder.Line length='very short' />
+                      </Placeholder.Header>
+                    </Placeholder>
+                  </Card.Content>
+                </Card>
+              </Fragment>
+            }
+          </div>
+
+        </div>
+
+
+
+
+
+
+        {/* <Slideshow hasAllPlaces={false} readOnly={true} /> */}
         {/* <Slideshow hasAllPlaces={false}/> */}
-        <p>Date: {dateFns.format(date, 'D MMMM YYYY')}</p>
-        <p>People: {numberOfTickets}</p>
-        <p>Price: {numberOfTickets * 25}€</p>
-        {this.props.isLogged && <CardElement style={{ base: { fontSize: '18px' } }} />}
-        <Button basic onClick={this.updateStageHandler}>Back</Button>
-        <Button positive onClick={this.makeBookingHandler}>Book</Button>
-        {messageText &&
-          <Message negative={messageType==='negative'} positive={messageType==='positive'} onDismiss={this.handleDismiss}>
-            <Message.Header>{messageText}</Message.Header>
-          </Message>
-        }
+
+
       </div >
     )
   }
