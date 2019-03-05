@@ -10,6 +10,9 @@ const AnonRoute = ({ component: Component, isLogged, ...rest }) => {
         if (!isLogged) {
           return <Component {...props} />
         } else {
+          if(props.location.state){
+            return <Redirect to={{ pathname: props.location.state.from.pathname, state: { from: props.location } }} />
+          }
           return <Redirect to={{ pathname: '/', state: { from: props.location } }} />
         }
       }

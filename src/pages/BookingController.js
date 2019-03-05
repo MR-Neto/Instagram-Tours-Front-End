@@ -19,16 +19,18 @@ class BookingController extends Component {
 
 
   render() {
-    return (
-      <div>
-        {this.state.stage === 0 && <Booking updateStage={this.updateStage} />}
-        {this.state.stage === 1 &&
-          <Elements>
-            <InjectedCheckoutForm updateStage={this.updateStage}/>
-          </Elements>        
-        }
-      </div>
-    )
+    switch (this.state.stage) {
+      case 0:
+        return <Booking updateStage={this.updateStage} />
+      case 1:
+        return (
+        <Elements>
+          <InjectedCheckoutForm updateStage={this.updateStage}/>
+        </Elements>
+        )
+      default:
+        return null
+    }
   }
 }
 

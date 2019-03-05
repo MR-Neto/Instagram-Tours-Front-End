@@ -6,13 +6,16 @@ import bookingService from '../lib/bookingService';
 import tourService from '../lib/tourService';
 import Slideshow from '../components/Slideshow';
 import { injectStripe } from 'react-stripe-elements';
+import { compose } from 'recompose';
 import { CardElement } from 'react-stripe-elements';
 import dateFns from 'date-fns';
+import './Cart.css';
+
 
 class Cart extends Component {
 
-  state ={
-    message:""
+  state = {
+    message: ""
   }
 
   updateStageHandler = () => {
@@ -20,41 +23,44 @@ class Cart extends Component {
   }
 
   makeBookingHandler = async () => {
+    const { isLogged, stripe } = this.props;
 
     try {
-      if (this.props.isLogged) {
-        const { date, numberOfTickets, placesPicked } = bookingService;
-        const { token } = await this.props.stripe.createToken({ name: 'Jenny Rosen' });
-        console.log("FRONT END TOKEN:",token);
-        const booking = {
-          details: {
-            date,
-            user: {
-              buyer: this.props.user._id,
-              numberOfTickets,
-            },
-            places: placesPicked,
-          },
+      if (isLogged) {
+        const { date, numberOfTickets, placesPicked: places } = bookingService;
+
+        const { token } = await stripe.createToken({ name: 'Jenny Rosen' });
+        // console.log("FRONT END TOKEN:", token);
+        const user = {
+          buyer: this.props.user._id,
+          numberOfTickets,
+        }
+        // console.log(booking);
+
+        const responseMakeBooking = await tourService.makeBooking({
+          details: { date, user, places },
           token,
-        };
-        console.log(booking);
-        
-        const responseMakeBooking = await tourService.makeBooking(booking);
+        });
+
         console.log("Response MakingBooking ", responseMakeBooking);
         if (responseMakeBooking === 'successful booking') {
           bookingService.clearValues();
           this.props.history.push('/profile');
-        } else if (responseMakeBooking === 'payment unsuccessful') { 
+        } else if (responseMakeBooking === 'payment unsuccessful') {
           this.setState({
-            message:"payment unsuccessful"
+            message: "payment unsuccessful"
           });
-        } else if (responseMakeBooking === 'tour is full') { 
+        } else if (responseMakeBooking === 'tour is full') {
           this.setState({
-            message:"tour is full"
+            message: "tour is full"
           });
-        } 
+        }
       } else {
-        this.props.history.push('/auth/login');
+        console.log(this.props.location);
+        this.props.history.push({
+          pathname: '/auth',
+          state: { from: this.props.location }
+        });
       }
     } catch (error) {
       console.log('Error Make booking', error);
@@ -66,8 +72,10 @@ class Cart extends Component {
 
     return (
       <div>
-        <Navbar />
-        <Slideshow hasAllPlaces={false}/>
+        <div className='topbar'>
+          <Navbar />
+        </div>
+        <Slideshow hasAllPlaces={false} />
         <button onClick={this.updateStageHandler}>Back</button>
         <h2>Your tour</h2>
         {/* <Slideshow hasAllPlaces={false}/> */}
@@ -83,4 +91,8 @@ class Cart extends Component {
   }
 }
 
-export default injectStripe(withRouter(withAuth(Cart)));
+export default compose(
+  withAuth,
+  withRouter,
+  injectStripe
+)(Cart);

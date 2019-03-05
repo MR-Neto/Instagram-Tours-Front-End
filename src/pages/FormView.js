@@ -3,7 +3,8 @@ import Navbar from "../components/Navbar";
 import { withAuth } from "../routes/AuthProvider";
 import GoogleLogin from 'react-google-login';
 import { Message } from 'semantic-ui-react'
-import { Button, Form, Divider, Label, Segment, Grid, Transition } from 'semantic-ui-react'
+import { Button, Form, Divider, Label, Segment, Transition } from 'semantic-ui-react'
+import './FormView.css'; // stylecomponents
 
 
 class FormView extends Component {
@@ -25,7 +26,8 @@ class FormView extends Component {
       this.props.signup({ username, password, name, phoneNumber })
         .then((signupResponse) => {
           if (signupResponse === "success") {
-            this.props.history.goBack();
+            console.log(this.props);
+            // this.props.history.push()
           } else {
             this.setState({
               messageVisible: true,
@@ -38,7 +40,7 @@ class FormView extends Component {
       this.props.login({ username, password })
         .then((loginResponse) => {
           if (loginResponse === "success") {
-            this.props.history.goBack();
+            // this.props.history.goBack();
           } else {
             this.setState({
               messageVisible: true,
@@ -56,13 +58,22 @@ class FormView extends Component {
 
   responseGoogle = (response) => {
   }
-  
-  singUpForm = () => {
-    this.setState({
-      mode: "signup",
-      messageVisible: false,
-      messageText: "",
-    });
+
+  toggleFormMode = () => {
+    const { mode } = this.state;
+    if (mode === "login") {
+      this.setState({
+        mode: "signup",
+        messageVisible: false,
+        messageText: "",
+      });
+    } else {
+      this.setState({
+        mode: "login",
+        messageVisible: false,
+        messageText: "",
+      });
+    }
   }
 
   handleDismiss = () => {
@@ -70,38 +81,47 @@ class FormView extends Component {
   }
 
   render() {
-    const { username, password, name, phoneNumber, mode, messageVisible, messageText } = this.state;
+    const { 
+      username,
+      password,
+      name,
+      phoneNumber,
+      mode,
+      messageVisible,
+      messageText
+    } = this.state;
 
     return (
       <div>
-        <Navbar />
+        <div className="topbar">
+          <Navbar />
+        </div>
         <Segment basic textAlign='center'>
-              <GoogleLogin
-                clientId="658977310896-knrl3gka66fldh83dao2rhgbblmd4un9.apps.googleusercontent.com"
-                buttonText="Login"
-                onSuccess={this.responseGoogle}
-                onFailure={this.responseGoogle}
-              />
-              <Button name="signupFacebook" onClick={this.handleFormSubmit}>Facebook</Button>
+          <GoogleLogin
+            clientId="658977310896-knrl3gka66fldh83dao2rhgbblmd4un9.apps.googleusercontent.com"
+            buttonText="Login"
+            onSuccess={this.responseGoogle}
+            onFailure={this.responseGoogle}
+          />
+          <Button name="signupFacebook" onClick={this.handleFormSubmit}>Facebook</Button>
+          <Divider horizontal>Or</Divider>
+          <Form onSubmit={this.handleFormSubmit}>
+            <Form.Input label='Username' icon='user' iconPosition='left' type="text" name="username" value={username} onChange={this.handleChange} />
+            <Form.Input label='Password' icon='lock' iconPosition='left' type="password" name="password" value={password} onChange={this.handleChange} />
+            <Transition.Group animation={mode === 'login' ? 'fade down' : 'fade up'} duration={500}>
+              {mode === 'signup' &&
+                <div>
+                  <Form.Input label='Full Name' type="text" name="name" value={name} onChange={this.handleChange} width={16} />
+                  <Form.Input label='Phone' icon='phone' iconPosition='left' type="number" name="phoneNumber" value={phoneNumber} onChange={this.handleChange} width={16} />
+                  <Divider horizontal></Divider>
+                </div>
+              }
+              <Form.Button primary name={(mode === "login") ? "login" : "signup"}>{(mode === "login") ? "Log in" : "Sign up"}</Form.Button>
               <Divider horizontal>Or</Divider>
-              <Form onSubmit={this.handleFormSubmit}>
-                <Form.Input label='Username' icon='user' iconPosition='left' type="text" name="username" value={username} onChange={this.handleChange} />
-                <Form.Input label='Password' icon='lock' iconPosition='left' type="password" name="password" value={password} onChange={this.handleChange} />
-                <Transition.Group animation='fade down' duration={500}>
-                  {mode === 'signup' &&
-                    <div>
-                      <Form.Input label='Full Name' type="text" name="name" value={name} onChange={this.handleChange} width={16} />
-                      <Form.Input label='Phone' icon='phone' iconPosition='left' type="number" name="phoneNumber" value={phoneNumber} onChange={this.handleChange} width={16} />
-                      <Divider horizontal></Divider>
-                    </div>
-                  }
-                </Transition.Group>
-                <Form.Button primary name={(mode === "login") ? "login" : "signup"} onClick={this.handleFormSubmit}>{(mode === "log in") ? "Log in" : "Sign up"}</Form.Button>
-              </Form>
-              {mode === "login" && <Divider horizontal>Or</Divider>}
-              {mode === "login" && <Label onClick={this.singUpForm}>Don't have an account? Sign up!</Label>}
-
-              {messageVisible && <Message negative onDismiss={this.handleDismiss} header={messageText} />}
+              <Label onClick={this.toggleFormMode}>{(mode === "login") ? "Don't have an account? Sign up!" : "Already have an account? Log in!"}</Label>
+            </Transition.Group>
+          </Form>
+          {messageVisible && <Message negative onDismiss={this.handleDismiss} header={messageText} />}
         </Segment>
       </div>
     );

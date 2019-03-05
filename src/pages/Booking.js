@@ -30,12 +30,12 @@ class Booking extends Component {
 
   decreaseNumberOfTickets = () => {
     const { numberOfTickets, capacity } = this.state;
-    if(numberOfTickets > 1) {
+    if (numberOfTickets > 1) {
       this.setState({
         numberOfTickets: numberOfTickets - 1,
       });
     } else {
-      this.setState({ 
+      this.setState({
         messageVisible: true,
         messageText: `Number of tickets must be min 1 and max ${capacity}`
       });
@@ -44,12 +44,12 @@ class Booking extends Component {
 
   increaseNumberOfTickets = () => {
     const { numberOfTickets, capacity } = this.state;
-    if(numberOfTickets < capacity) {
+    if (numberOfTickets < capacity) {
       this.setState({
         numberOfTickets: numberOfTickets + 1,
       });
     } else {
-      this.setState({ 
+      this.setState({
         messageVisible: true,
         messageText: `Number of tickets must be min 1 and max ${capacity}`
       });
@@ -105,7 +105,9 @@ class Booking extends Component {
 
     return (
       <div>
-        <Navbar />
+        <div className="topbar">
+          <Navbar />
+        </div>
         <div className="filters">
           <div>
             <Button basic onClick={this.toggleVisibilityCalendar}>Dates</Button>
@@ -126,8 +128,7 @@ class Booking extends Component {
             {messageVisible && <Message negative onDismiss={this.handleDismiss} header={messageText} />}
           </Transition.Group>
         </div>
-        <Slideshow hasAllPlaces={true}/>
-        
+        <Slideshow hasAllPlaces={true}/> 
       </div>
     );
   }

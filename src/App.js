@@ -7,22 +7,8 @@ import Home from './pages/Home';
 import FormView from './pages/FormView';
 import Profile from './pages/Profile';
 import BookingController from './pages/BookingController';
-import placesService from './lib/placesService';
 
 class App extends Component {
-  state = {
-    placesList:[]
-  }
-
-  componentDidMount(){
-    placesService.getAllPlaces()
-    .then((placesList)=>{
-      this.setState({
-        placesList
-      });
-    });
-  }
-  
  
   render() {
     return (
@@ -31,7 +17,7 @@ class App extends Component {
           <Switch>
             <AnonRoute path="/auth" component={FormView} />
             <PrivateRoute path="/profile" component={Profile} />
-            <Route path="/book" component={BookingController} AppState = {this.state} />
+            <Route path="/book" component={BookingController} />
             <Route path="/" component={Home} />
           </Switch>
         </div>
