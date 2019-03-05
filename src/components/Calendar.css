@@ -25,7 +25,7 @@
 /* VARIABLES */
 
 :root {
-  --main-color: #1a8fff;
+  --main-color: #F2994A;
   --text-color: #777;
   --text-color-light: #ccc;
   --border-color: #eee;
@@ -39,8 +39,6 @@
 * {
   box-sizing: border-box;
 }
-
-
 
 header {
   display: block;
@@ -172,7 +170,7 @@ main {
 }
 
 .calendar .body .selected {
-  color: #326273;
+  color: #000;
 }
 
 .calendar .body .row {

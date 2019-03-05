@@ -1,61 +1,65 @@
 .slideshow {
   overflow-x: hidden;
-  height: 35vh;
+  height: 26vh;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   padding-top: 1rem;
   .positive {
     margin-left: 4rem;
+    margin-bottom: 2rem;
   }
 }
 
-.card {
+.slide {
   display: flex;
   flex-direction: column;
   border-radius: 50%;
-  height: 12rem;
-  width: 12rem;
+  height: 8rem;
+  width: 8rem;
   margin-right: 0.5rem;
   $border: 2px;
   background-clip: padding-box; /* !importanté */
   border: solid $border transparent; /* !importanté */
-
-  &:before {
-    content: '';
-    position: absolute;
-    top: 0; right: 0; bottom: 0; left: 0;
-    z-index: -1;
-    margin: -$border; /* !importanté */
-    border-radius: inherit; /* !importanté */
-    background: linear-gradient(to right, orange, yellow);
-  } 
 }
 
-.cards-slider {
+.slider {
   position: relative;
   max-width: 226px;
   height: 100%;
 }
 
-.cards-slider-wrapper {
+.slider-wrapper {
   display: flex;
   position: absolute;
   transition: transform 300ms cubic-bezier(0.455, 0.03, 0.515, 0.955);
-  .card {
+  .slide {
     flex: 1;
     min-width: 50px;
-    transform: scale(0.96);
+    transform: scale(0.98);
     transition: opacity 300ms linear, transform 300ms cubic-bezier(0.455, 0.03, 0.515, 0.955);
   }
-  .card-selected {
+  .slide-selected {
     transform: scale(0.90);
+    $border: 2px;
+
+    &:before {
+      content: '';
+      position: absolute;
+      top: 0; right: 0; bottom: 0; left: 0;
+      z-index: -1;
+      margin: -$border; /* !importanté */
+      border-radius: inherit; /* !importanté */
+      background: #F2994A;  /* fallback for old browsers */
+      background: -webkit-linear-gradient(to right, #F2C94C, #F2994A);  /* Chrome 10-25, Safari 5.1-6 */
+      background: linear-gradient(to right, #F2C94C, #F2994A); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    } 
   }
 }
 
 $i: 0;
 @for $i from 0 through 5 {
-  .cards-slider.active-slide-#{$i} #card-#{$i} {
+  .slider .active-slide-#{$i} #slide-#{$i} {
     opacity: 1;
   }
 }

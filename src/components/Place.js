@@ -20,13 +20,13 @@ class Place extends Component {
     const { imagesURL, index } = place;
     const { isSelected } = this.state;
     return (
-      <div id={`card-${index}`} className={`card ${isSelected ? 'card-selected': ''}`} onClick={() => {
+      <div id={`slide-${index}`} className={`slide ${isSelected ? 'slide-selected': ''}`} onClick={() => {
         !readOnly && bookingService.togglePlacesPicked(place._id);
         !readOnly && this.toggleSelection();
         }}>
         <Image 
-          id={`card-${index}`} 
-          className="card" 
+          id={`slide-${index}`} 
+          className="slide" 
           src={imagesURL} 
           size='medium' 
           circular

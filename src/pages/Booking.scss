@@ -21,23 +21,35 @@
   display: flex;
   flex-direction: left;
   justify-content: space-between;
-  .button {
+  .ui.basic.button {
     margin-left: 0.5rem;
   }
 }
 
-.options {
-  .positive {
-    width: 15rem;
-  }
+.buttons {
+  height: 3.5rem;
 }
 
-.action {
-  display: flex;
-  justify-content: center;
-  padding: 1rem 0;
+.ui.positive.button {
+  background-color: #F2994A;
+}
+
+.ui.fluid.positive.button {
+  margin-bottom: 2rem;
 }
 
 .topbar {
   height: 50px;
+}
+
+.ui.card {
+  width: 100%;
+}
+
+.ui.container {
+  margin-top: 2rem;
+}
+
+h2 {
+  margin-left: 1rem;
 }
