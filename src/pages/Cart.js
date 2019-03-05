@@ -8,14 +8,15 @@ import Slideshow from '../components/Slideshow';
 import { injectStripe } from 'react-stripe-elements';
 import { compose } from 'recompose';
 import { CardElement } from 'react-stripe-elements';
-import { Button } from 'semantic-ui-react'
+import { Button, Message } from 'semantic-ui-react'
 import dateFns from 'date-fns';
 import './Cart.css';
 
 class Cart extends Component {
 
   state = {
-    message: ""
+    messageText: false,
+    messageType: "",
   }
 
   updateStageHandler = () => {
@@ -24,19 +25,28 @@ class Cart extends Component {
   }
 
   validateBooking(responseMakeBooking) {
-    if (responseMakeBooking === 'successful booking') {
+    if (responseMakeBooking.code === 'successful booking') {
       bookingService.clearValues();
-      this.props.history.push('/profile');
+      this.setState = {
+        messageText: "Successful Booking!",
+        messageType: 'positive',
+      }
     } else if (responseMakeBooking === 'payment unsuccessful') {
       this.setState({
-        message: "payment unsuccessful"
+        messageText: "payment unsuccessful",
+        messageType: 'negative',
       });
     } else if (responseMakeBooking === 'tour is full') {
       this.setState({
-        message: "tour is full"
+        messageText: "tour is full",
+        messageType: 'negative',
       });
     }
   }
+
+  handleDismiss = () => {
+    this.setState({ messageText: false });
+  };
 
   makeBookingHandler = async () => {
     const { isLogged, stripe } = this.props;
@@ -70,11 +80,16 @@ class Cart extends Component {
       }
     } catch (error) {
       console.log('Error Make booking', error);
+      this.setState({
+        messageText: "Booking unsuccessful",
+        messageType: 'negative',
+      });
     }
   }
 
   render() {
     const { date, numberOfTickets } = bookingService;
+    const { messageText, messageType } = this.state;
 
     return (
       <div>
@@ -90,7 +105,11 @@ class Cart extends Component {
         {this.props.isLogged && <CardElement style={{ base: { fontSize: '18px' } }} />}
         <Button basic onClick={this.updateStageHandler}>Back</Button>
         <Button positive onClick={this.makeBookingHandler}>Book</Button>
-        <p>{this.state.message}</p>
+        {messageText &&
+          <Message {...messageType} onDismiss={this.handleDismiss}>
+            <Message.Header>You are eligible for a reward</Message.Header>
+          </Message>
+        }
       </div >
     )
   }
