@@ -37,13 +37,17 @@ class Cart extends Component {
   }
 
   makeBookingHandler = async () => {
-    const { isLogged, stripe } = this.props;
+    const { isLogged, stripe} = this.props;
 
     try {
       if (isLogged) {
         const { date, numberOfTickets, placesPicked: places } = bookingService;
-        const data = await stripe.createToken({ name: 'Jenny Rosen' });
-        console.log("data ",data);
+        const { name } = this.props.user;
+
+        const data = await stripe.createToken({
+           name 
+        });
+
         const token = data.token.id;
         
         const user = {
