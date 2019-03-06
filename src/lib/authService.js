@@ -16,6 +16,10 @@ class AuthService {
     return this.auth.post('/auth/login', user);
   }
 
+  initGoogle(tokenId) {
+    return this.auth.post('/auth/google', tokenId);
+  }
+
   logout() {
     return this.auth.post('/auth/logout', {})
       .then(({ data }) => {

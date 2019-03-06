@@ -57,7 +57,14 @@ class FormView extends Component {
     }
   };
 
-  responseGoogle = response => {};
+  responseGoogle = response => {
+    console.log(response);
+    const token1 = {
+      tokenId: response.tokenId,
+    }
+    // this.props.setUser();
+    this.props.initGoogle(token1);
+  };
 
   toggleFormMode = () => {
     const { mode } = this.state;
@@ -97,7 +104,13 @@ class FormView extends Component {
             clientId={process.env.REACT_APP_GOOGLE_AUTH}
             buttonText="Login"
             onSuccess={this.responseGoogle}
-            onFailure={this.responseGoogle}
+            onFailure={(response)=>{
+              console.log("Response failure ",response);
+              this.setState({
+                messageVisible: true,
+                messageText: "Google permission denied"
+              })
+            }}
           />
           <Divider horizontal>Or</Divider>
           <AuthForm mode={mode} handleFormSubmit={this.handleFormSubmit} />
