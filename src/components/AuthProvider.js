@@ -45,8 +45,6 @@ export default class AuthProvider extends Component {
   loginUser = (body) => {
     return authService.login(body)
       .then(({ data }) => {
-        console.log("login data", data);
-
         this.setUser(data);
         return data;
       })
@@ -55,7 +53,6 @@ export default class AuthProvider extends Component {
   signupUser = (body) => {
     return authService.signup(body)
       .then(({ data }) => {
-        console.log("signup data", data);
         this.setUser(data);
         return data;
       })
@@ -63,7 +60,6 @@ export default class AuthProvider extends Component {
 
   initGoogle = async (body) => {
     const { data } = await authService.initGoogle(body);
-    console.log("DATA FROM BACKEND google", data);
     this.setUser(data);
     return data;
   }

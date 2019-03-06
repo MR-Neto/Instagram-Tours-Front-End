@@ -23,7 +23,6 @@ class AuthService {
   logout() {
     return this.auth.post('/auth/logout', {})
       .then(({ data }) => {
-        console.log('Logout successful');
         return data;
       })
       .catch((err) => {

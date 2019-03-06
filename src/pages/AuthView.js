@@ -58,7 +58,6 @@ class FormView extends Component {
   };
 
   responseGoogle = response => {
-    console.log(response);
     const token1 = {
       tokenId: response.tokenId,
     }
@@ -105,7 +104,6 @@ class FormView extends Component {
             buttonText="Login"
             onSuccess={this.responseGoogle}
             onFailure={(response)=>{
-              console.log("Response failure ",response);
               this.setState({
                 messageVisible: true,
                 messageText: "Google permission denied"
