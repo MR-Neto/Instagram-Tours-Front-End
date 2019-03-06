@@ -66,11 +66,13 @@ class Slideshow extends Component {
 
     if(places.length > 0) {
       return (
-        <div className="slideshow">
-          <div className={`slider active-slide-${place.index}`}>
-            <div className="slider-wrapper" style={{
-              'transform': `translateX(-${place.index*(100/places.length)}%)`}}>
-              {this.renderAllPlaces(places)}
+        <div>
+          <div className="slideshow">
+            <div className={`slider active-slide-${place.index}`}>
+              <div className="slider-wrapper" style={{
+                'transform': `translateX(-${place.index*(100/places.length)}%)`}}>
+                {this.renderAllPlaces(places)}
+              </div>
             </div>
           </div>
           <div className="buttons">

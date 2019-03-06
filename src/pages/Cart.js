@@ -8,7 +8,7 @@ import placesService from '../lib/placesService';
 import { injectStripe } from 'react-stripe-elements';
 import { compose } from 'recompose';
 import { CardElement } from 'react-stripe-elements';
-import { Button, Message, Card, Grid, Image, Placeholder, Container } from 'semantic-ui-react'
+import { Button, Message, Card, Image, Placeholder, Container } from 'semantic-ui-react'
 import dateFns from 'date-fns';
 import './Cart.css';
 
@@ -74,14 +74,12 @@ class Cart extends Component {
         });
         this.validateBooking(responseMakeBooking);
       } else {
-        console.log(this.props.location);
         this.props.history.push({
           pathname: '/auth',
           state: { from: this.props.location }
         });
       }
     } catch (error) {
-      console.log('Error Make booking', error);
       this.setState({
         messageText: "Booking unsuccessful",
         messageType: 'negative',

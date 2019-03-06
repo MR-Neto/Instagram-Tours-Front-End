@@ -136,16 +136,16 @@ class Booking extends Component {
               onOpen={this.showGuests}
             >
               <div className="number-of-tickets">
-                <Button circular icon='minus' onClick={this.decreaseNumberOfTickets} />
+                <Button basic circular icon='minus' onClick={this.decreaseNumberOfTickets} />
                 <p>{numberOfTickets}</p>
-                <Button circular icon='plus' onClick={this.increaseNumberOfTickets} />
+                <Button basic circular icon='plus' onClick={this.increaseNumberOfTickets} />
               </div>
               <Transition.Group animation='fade' duration={500}>
                 {messageVisible && <Message size='tiny' negative onDismiss={this.handleDismiss} header={messageText} />}
               </Transition.Group>
             </Popup>
           </div>
-          <Button positive onClick={this.updateStageHandler}>
+          <Button onClick={this.updateStageHandler}>
             Confirm
           </Button>
         </div>
@@ -187,7 +187,7 @@ class Booking extends Component {
               </a>
             </Card.Content>
           </Card>
-          <Button positive fluid>Confirm</Button> 
+          <Button fluid>Confirm</Button> 
         </Container>
       </div>
     );

@@ -21,7 +21,6 @@ class TourService {
   makeBooking(booking) {
     return this.api.post('/book', booking)
       .then(({ data }) => {
-        console.log("DATA from backend: ", data)
         return data;
       })
       .catch((err) => {
