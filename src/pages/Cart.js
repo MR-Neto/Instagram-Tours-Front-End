@@ -7,7 +7,7 @@ import tourService from '../lib/tourService';
 import placesService from '../lib/placesService';
 import { injectStripe } from 'react-stripe-elements';
 import { compose } from 'recompose';
-import { CardElement, CardNumberElement, CardExpiryElement, CardCVCElement } from 'react-stripe-elements';
+import { CardElement } from 'react-stripe-elements';
 import { Button, Message, Card, Grid, Image, Placeholder, Container } from 'semantic-ui-react'
 import dateFns from 'date-fns';
 import './Cart.css';
@@ -142,27 +142,20 @@ class Cart extends Component {
               <p>Price: {numberOfTickets * 25}€</p>
               {this.props.isLogged &&
                 <Fragment>
+                  <p>Payment Details:</p>
                   <CardElement className='StripeElement' style={{
                     base: {
-                      iconColor: '#666EE8',
-                      color: 'black',
-                      lineHeight: '40px',
-                      fontWeight: 300,
-                      fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
-                      fontSize: '15px',
-
+                      iconColor: '#00041A',
+                      color: '#00041A',
+                      lineHeight: '1.4285em',
+                      fontWeight: 400,
+                      fontFamily: 'Lato,"Helvetica Neue",Arial,Helvetica,sans-serif',
+                      fontSize: '1em',
                       '::placeholder': {
-                        color: '#CFD7E0',
+                        color: '#00041A',
                       }
                     }
                   }} />
-          
-                  {/* <CardNumberElement />
-                  <div>
-                    <CardExpiryElement />
-                    <CardCVCElement />
-                  </div> */}
-
                 </Fragment>
 
               }
