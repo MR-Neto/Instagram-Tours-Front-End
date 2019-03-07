@@ -20,17 +20,20 @@ class Place extends Component {
     const { imagesURL, index } = place;
     const { isSelected } = this.state;
     return (
-      <div id={`slide-${index}`} className={`slide ${isSelected ? 'slide-selected': ''}`} onClick={() => {
-        !readOnly && bookingService.togglePlacesPicked(place._id);
-        !readOnly && this.toggleSelection();
-        }}>
-        <Image 
-          id={`slide-${index}`} 
-          className="slide" 
-          src={imagesURL} 
-          size='medium' 
-          circular
-        />
+      <div className="slide-container">
+        <div id={`slide-${index}`} className={`slide ${isSelected ? 'slide-selected': ''}`} onClick={() => {
+          !readOnly && bookingService.togglePlacesPicked(place._id);
+          !readOnly && this.toggleSelection();
+          }}>
+          <Image 
+            id={`slide-${index}`} 
+            className="slide" 
+            src={imagesURL} 
+            size='medium' 
+            circular
+          />
+        </div>
+        <p>{place.name}</p>
       </div>
     );
   }
