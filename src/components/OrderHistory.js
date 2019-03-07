@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { List } from 'semantic-ui-react';
+import { Container, Card, Image } from 'semantic-ui-react';
 import tourService from '../lib/tourService';
 import { withAuth } from '../components/AuthProvider';
 import Loader from './Loader';
@@ -21,13 +21,15 @@ class OrderHistory extends Component {
   renderBookedTours() {
     return this.state.tours.map((tour) => {
       return (
-        <List.Item key={tour._id}>
-            <List.Icon name='camera retro' size='large' verticalAlign='middle' />
-            <List.Content>
-              <List.Header as='a'>{tour.date}</List.Header>
-              <List.Description as='a'>{tour.price}</List.Description>
-            </List.Content>
-          </List.Item>
+         <Container key={tour._id}>
+          <Card className='card-place'>
+            <Image id='images-grid' src={tour.places[0].imagesURL[0]} />
+            <Card.Content>
+              <Card.Header>{tour.date}</Card.Header>
+              <Card.Description>{tour.users.numberOfTickets}</Card.Description>
+            </Card.Content>
+          </Card>
+        </Container>
       );
     });
   }
@@ -67,7 +69,7 @@ class OrderHistory extends Component {
       case "empty":
         return (
           // Put something
-          <Loader />
+          null
         );
       case "error":
         return <div>error</div>
@@ -75,9 +77,9 @@ class OrderHistory extends Component {
         return (
           <div>
             <h3>Booked Tours</h3>
-            <List divided relaxed>
+            <div id='grid-tour'>
               {this.renderBookedTours()}
-            </List>
+            </div>
           </div>
         )
     }
