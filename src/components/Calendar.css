@@ -161,16 +161,11 @@ main {
   overflow: hidden;
   cursor: pointer;
   background: var(--neutral-color);
-  transition: 0.25s ease-out;
+  /* transition: 0.25s ease-out; */
 }
 
 .calendar .body .cell:hover {
   background: var(--bg-color);
-  transition: 0.5s ease-out;
-}
-
-.calendar .body .selected {
-  color: #000;
 }
 
 .calendar .body .row {
@@ -201,7 +196,12 @@ main {
 
 .calendar .body .cell:hover .bg, .calendar .body .selected  {
   opacity: 1;
-  transition: .5s ease-in;
+  border: 0.5px solid orange;
+  border-radius: 5px;
+}
+
+.calendar .body .cell:hover .bg, .calendar .body .selected .number {
+  color: var(--text-color);
 }
 
 .calendar .body .col {
