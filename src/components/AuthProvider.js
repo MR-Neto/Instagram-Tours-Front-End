@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import authService from '../lib/authService';
+import { Dimmer, Loader } from 'semantic-ui-react'
+import './AuthProvider.css';
+
 
 export const AuthContext = React.createContext(
   // authStore // default value
@@ -105,7 +108,13 @@ export default class AuthProvider extends Component {
     const { children } = this.props;
     switch (status) {
       case 'loading':
-        return <div>Loading</div>
+        return (
+          <div className="loader-container">
+             <Dimmer active>
+               <Loader />
+             </Dimmer>
+          </div>
+        )
       default:
         return (
           <Provider value={

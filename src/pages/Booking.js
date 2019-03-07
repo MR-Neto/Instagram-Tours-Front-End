@@ -110,9 +110,7 @@ class Booking extends Component {
     } else {
       formattedDate = "Dates";
     }
-
-    console.log("booking STAGE", bookingService.stage);
-
+    
     return (
       <div>
         <div className="topbar">

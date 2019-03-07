@@ -24,15 +24,18 @@ class Navbar extends Component {
               {isLogged ? <Link to="/profile">Profile</Link> : <Link to="/auth">Log In</Link>}
             </Dropdown.Item>
             {isLogged && <Fragment>
-                <Dropdown.Divider />
-                <Dropdown.Item>
-                  <button onClick={this.props.logout}>Log Out</button>
-                </Dropdown.Item>
-              </Fragment>
+              <Dropdown.Divider />
+              <Dropdown.Item>
+                <button onClick={this.props.logout}>Log Out</button>
+              </Dropdown.Item>
+            </Fragment>
             }
           </Dropdown.Menu>
         </Dropdown>
-        <img src="./camera.png" alt="icon" srcset="" className="image-icon"/>
+        <Link to="/">
+          <img src="./camera.png" alt="icon" className="image-icon" />
+        </Link>
+
       </Fragment>
     );
   }

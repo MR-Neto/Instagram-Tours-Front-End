@@ -27,7 +27,6 @@ class Cart extends Component {
    }
 
   validateBooking = (responseMakeBooking) => {
-    console.log("inside validate booking, responseMakeBooking:", responseMakeBooking);
     if (responseMakeBooking.code === 'successful booking') {
       this.setState({
         messageText: "Successful Booking!",
@@ -80,7 +79,6 @@ class Cart extends Component {
           details: { date, user, places },
           token,
         });
-        console.log(responseMakeBooking)
         this.validateBooking(responseMakeBooking);
       } else {
         this.props.history.push({

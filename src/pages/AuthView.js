@@ -103,7 +103,7 @@ class FormView extends Component {
             clientId={process.env.REACT_APP_GOOGLE_AUTH}
             buttonText="Login"
             onSuccess={this.responseGoogle}
-            onFailure={(response)=>{
+            onFailure={()=>{
               this.setState({
                 messageVisible: true,
                 messageText: "Google permission denied"

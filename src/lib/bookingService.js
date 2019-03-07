@@ -29,11 +29,6 @@ class BookingService {
     this.numberOfTickets = num;
   }
 
-  setDate(date) {
-    this.date = date;
-    console.log('update BOOKING SERVICE DATE', this.date);
-  }
-
   clearValues(values) {
     this.date = '';
     this.placesPicked = [];
