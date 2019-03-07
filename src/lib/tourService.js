@@ -26,7 +26,7 @@ class TourService {
       .catch((err) => {
         console.log("Error: ", err)
         if (err.response.data.code) {
-          return err.response.data.code;
+          return err.response.data;
         } else {
           console.log("Error: ", err)
         }

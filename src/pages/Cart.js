@@ -7,8 +7,8 @@ import tourService from '../lib/tourService';
 import placesService from '../lib/placesService';
 import { injectStripe } from 'react-stripe-elements';
 import { compose } from 'recompose';
-import { CardElement } from 'react-stripe-elements';
-import { Button, Message, Card, Image, Placeholder, Container } from 'semantic-ui-react'
+import { CardElement, CardNumberElement, CardExpiryElement, CardCVCElement } from 'react-stripe-elements';
+import { Button, Message, Card, Grid, Image, Placeholder, Container } from 'semantic-ui-react'
 import dateFns from 'date-fns';
 import './Cart.css';
 
@@ -16,9 +16,10 @@ class Cart extends Component {
 
   state = {
     messageText: false,
-    messageType: "",
+    messageType: false,
     places: [],
     isloaded: false,
+    isPaying: false,
   }
 
   updateStageHandler = () => {
@@ -26,22 +27,26 @@ class Cart extends Component {
     bookingService.resetPlacesPicked();
   }
 
-  validateBooking(responseMakeBooking) {
+  validateBooking = (responseMakeBooking) => {
+    console.log("inside validate booking, responseMakeBooking:", responseMakeBooking);
     if (responseMakeBooking.code === 'successful booking') {
-      bookingService.clearValues();
-      this.setState = {
+      this.setState({
         messageText: "Successful Booking!",
-        messageType: 'positive',
-      }
-    } else if (responseMakeBooking === 'payment unsuccessful') {
-      this.setState({
-        messageText: "payment unsuccessful",
-        messageType: 'negative',
+        messageType: true,
+        isPaying: false,
       });
-    } else if (responseMakeBooking === 'tour is full') {
+
+    } else if (responseMakeBooking.code === 'payment unsuccessful') {
       this.setState({
-        messageText: "tour is full",
-        messageType: 'negative',
+        messageText: "Payment unsuccessful.",
+        messageType: false,
+        isPaying: false,
+      });
+    } else if (responseMakeBooking.code === 'tour is full') {
+      this.setState({
+        messageText: "Tour is full.",
+        messageType: false,
+        isPaying: false,
       });
     }
   }
@@ -55,6 +60,10 @@ class Cart extends Component {
 
     try {
       if (isLogged) {
+        this.setState({
+          isPaying: true,
+        });
+
         const { date, numberOfTickets, placesPicked: places } = bookingService;
         const { name } = this.props.user;
 
@@ -72,6 +81,7 @@ class Cart extends Component {
           details: { date, user, places },
           token,
         });
+        console.log(responseMakeBooking)
         this.validateBooking(responseMakeBooking);
       } else {
         this.props.history.push({
@@ -82,7 +92,8 @@ class Cart extends Component {
     } catch (error) {
       this.setState({
         messageText: "Booking unsuccessful",
-        messageType: 'negative',
+        messageType: false,
+        isPaying: false,
       });
     }
   }
@@ -101,9 +112,9 @@ class Cart extends Component {
   renderAllPlaces = () => {
     return this.state.places.map((place) => {
       return (
-        <Container>
+        <Container key={place._id}>
           <Card className='card-place'>
-            <Image src={place.imagesURL[0]} />
+            <Image id='images-grid' src={place.imagesURL[0]} />
             <Card.Content>
               <Card.Header>{place.name}</Card.Header>
             </Card.Content>
@@ -115,7 +126,7 @@ class Cart extends Component {
 
   render() {
     const { date, numberOfTickets } = bookingService;
-    const { messageText, messageType, isloaded } = this.state;
+    const { messageText, messageType, isloaded, isPaying } = this.state;
 
     return (
       <div>
@@ -129,18 +140,45 @@ class Cart extends Component {
               <p>Date: {dateFns.format(date, 'D MMMM YYYY')}</p>
               <p>Persons: {numberOfTickets}</p>
               <p>Price: {numberOfTickets * 25}€</p>
-              {this.props.isLogged && <CardElement style={{ base: { fontSize: '18px' } }} />}
-              <Button basic onClick={this.updateStageHandler}>Back</Button>
-              <Button positive onClick={this.makeBookingHandler}>Book</Button>
+              {this.props.isLogged &&
+                <Fragment>
+                  <CardElement className='StripeElement' style={{
+                    base: {
+                      iconColor: '#666EE8',
+                      color: 'black',
+                      lineHeight: '40px',
+                      fontWeight: 300,
+                      fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+                      fontSize: '15px',
+
+                      '::placeholder': {
+                        color: '#CFD7E0',
+                      }
+                    }
+                  }} />
+          
+                  {/* <CardNumberElement />
+                  <div>
+                    <CardExpiryElement />
+                    <CardCVCElement />
+                  </div> */}
+
+                </Fragment>
+
+              }
+              <div className='container-buttons'>
+                <Button basic onClick={this.updateStageHandler}>Back</Button>
+                <Button id='button-pay' loading={isPaying} onClick={this.makeBookingHandler}>Book</Button>
+              </div>
               {messageText &&
-                <Message negative={messageType === 'negative'} positive={messageType === 'positive'} onDismiss={this.handleDismiss}>
+                <Message negative={!messageType} positive={messageType} onDismiss={this.handleDismiss}>
                   <Message.Header>{messageText}</Message.Header>
                 </Message>
               }
             </Card.Content>
           </Card>
           <h2>Your tour</h2>
-          <div className='grid-tour'>
+          <div id='grid-tour'>
             {isloaded ?
               this.renderAllPlaces()
               :
