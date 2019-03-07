@@ -21,13 +21,12 @@ class TourService {
   makeBooking(booking) {
     return this.api.post('/book', booking)
       .then(({ data }) => {
-        console.log("DATA from backend: ", data)
         return data;
       })
       .catch((err) => {
         console.log("Error: ", err)
         if (err.response.data.code) {
-          return err.response.data.code;
+          return err.response.data;
         } else {
           console.log("Error: ", err)
         }

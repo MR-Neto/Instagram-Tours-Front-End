@@ -15,16 +15,42 @@
   height: auto;
 }
 
-.card-place{
-  margin: 10px;
-}
-
-
-.grid-tour{
+#grid-tour{
   margin: 0 auto;
   width: 100%;
   display: grid;
   grid-template-columns: 50% 50%;
   grid-column-gap: 0.25rem;
-  grid-row-gap: 2.5rem;
+  grid-row-gap: 0.5rem;
+}
+
+#grid-tour .content{
+  height: 4rem;
+}
+
+#grid-tour .header{
+  font-size: 1.15em;
+}
+
+#grid-tour .ui.image{
+ height: 8rem;
+}
+
+#button-pay{
+  background-color: #F2994A;
+  color: white
+}
+
+.container-buttons{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.StripeElement{
+  padding: 7px;
+  border: 1px black solid;
+  background-color: gainsboro;
 }
