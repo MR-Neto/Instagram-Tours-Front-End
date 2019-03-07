@@ -158,6 +158,7 @@ main {
   align-items: center;
   height: 5rem;
   width: 5rem;
+  line-height: 2rem;
   overflow: hidden;
   cursor: pointer;
   background: var(--neutral-color);
