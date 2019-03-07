@@ -142,10 +142,18 @@ class Calendar extends Component {
   }
 
   onDateClick = day => {
-    this.setState({
-      selectedDate: day
-    });
-    this.props.updateSelectedDateHandler(day);
+    const foundTour = this.findMatchingTourByDate(day);
+    if(foundTour && !foundTour.isFull) {
+      this.setState({
+        selectedDate: day
+      });
+      this.props.updateSelectedDateHandler(day);
+    } else if(!foundTour) {
+      this.setState({
+        selectedDate: day
+      });
+      this.props.updateSelectedDateHandler(day);
+    }
   };
 
   nextMonth = () => {
