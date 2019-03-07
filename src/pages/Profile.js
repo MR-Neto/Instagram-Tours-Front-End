@@ -16,7 +16,7 @@ class Profile extends Component {
         <Container>
           <div className="profile-details">
             {user.imageURL ?
-            <Image id="profile-image" src={user.imageURL} rounded /> :
+            <Image className="profile-image" src={user.imageURL} rounded /> :
             <Image src='https://react.semantic-ui.com/images/avatar/large/molly.png' rounded />
             }
             <h2>{user.name}</h2>
