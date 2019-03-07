@@ -14,9 +14,9 @@ class Profile extends Component {
           <Navbar />
         </div>
         <Container>
-          <div className="profile-details">
+          <div className="profile-details" id="profile-details">
             {user.imageURL ?
-            <Image className="profile-image" src={user.imageURL} rounded /> :
+            <Image src={user.imageURL} rounded /> :
             <Image src='https://react.semantic-ui.com/images/avatar/large/molly.png' rounded />
             }
             <h2>{user.name}</h2>

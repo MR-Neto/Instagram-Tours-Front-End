@@ -7,7 +7,9 @@
 
 .profile-details{
   margin-bottom: 2rem;
-  .ui.rounded.image.profile-image{
+}
+#profile-details{
+  img{
     width: 100%;
   }
 }
