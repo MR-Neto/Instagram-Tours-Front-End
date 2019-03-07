@@ -11,26 +11,29 @@ class Navbar extends Component {
     const { isLogged } = this.props;
 
     return (
-      <Dropdown icon="bars" id='burger-menu'>
-        <Dropdown.Menu>
-          <Dropdown.Item>
-            <Link to="/">Home</Link>
-          </Dropdown.Item>
-          <Dropdown.Item>
-            <Link to="/book">Book tour</Link>
-          </Dropdown.Item>
-          <Dropdown.Item>
-            {isLogged ? <Link to="/profile">Profile</Link> : <Link to="/auth">Log In</Link>}
-          </Dropdown.Item>
-          {isLogged && <Fragment>
-              <Dropdown.Divider />
-              <Dropdown.Item>
-                <button onClick={this.props.logout}>Log Out</button>
-              </Dropdown.Item>
-            </Fragment>
-          }
-        </Dropdown.Menu>
-      </Dropdown>
+      <Fragment>
+        <Dropdown icon="bars" id='burger-menu'>
+          <Dropdown.Menu>
+            <Dropdown.Item>
+              <Link to="/">Home</Link>
+            </Dropdown.Item>
+            <Dropdown.Item>
+              <Link to="/book">Book tour</Link>
+            </Dropdown.Item>
+            <Dropdown.Item>
+              {isLogged ? <Link to="/profile">Profile</Link> : <Link to="/auth">Log In</Link>}
+            </Dropdown.Item>
+            {isLogged && <Fragment>
+                <Dropdown.Divider />
+                <Dropdown.Item>
+                  <button onClick={this.props.logout}>Log Out</button>
+                </Dropdown.Item>
+              </Fragment>
+            }
+          </Dropdown.Menu>
+        </Dropdown>
+        <img src="./camera.png" alt="icon" srcset="" className="image-icon"/>
+      </Fragment>
     );
   }
 }

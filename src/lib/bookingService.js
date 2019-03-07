@@ -1,9 +1,9 @@
 class BookingService {
-  constructor(date, placesPicked, numberOfTickets, stage) {
-    this.date = date;
-    this.placesPicked = placesPicked;
-    this.numberOfTickets = numberOfTickets;
-    this.stage = stage;
+  constructor() {
+    this.date = '';
+    this.placesPicked = [];
+    this.numberOfTickets = 1;
+    this.stage = 0;
   }
 
   setValues(values, num) {
@@ -12,18 +12,13 @@ class BookingService {
       this.placesPicked = values.placesPicked;
       this.numberOfTickets = values.numberOfTickets;
     }
-    if (num) {
-      this.stage = num;
-    }
-  }
+    this.stage = num;
 
-  resetPlacesPicked() {
-    this.placesPicked = [];
   }
 
   togglePlacesPicked(placeId) {
     const { placesPicked } = this;
-    if(placesPicked.includes(placeId)) {
+    if (placesPicked.includes(placeId)) {
       placesPicked.splice(placesPicked.indexOf(placeId), 1);
     } else {
       this.placesPicked.push(placeId);
@@ -47,6 +42,6 @@ class BookingService {
   }
 }
 
-const booking = new BookingService('', [], 1, 0);
+const booking = new BookingService();
 
 export default booking;

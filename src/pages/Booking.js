@@ -19,7 +19,6 @@ class Booking extends Component {
     messageVisible: false,
     messageText: "",
     calendarVisibility: false,
-    popUpOpened: false,
   }
 
   updateSelectedDate = date => {
@@ -33,23 +32,20 @@ class Booking extends Component {
     if (numberOfTickets > 1) {
       this.setState({
         numberOfTickets: numberOfTickets - 1,
-        popUpOpened: true,
       });
     }
   }
- 
+
   increaseNumberOfTickets = () => {
     const { numberOfTickets, capacity } = this.state;
     if (numberOfTickets < capacity) {
       this.setState({
         numberOfTickets: numberOfTickets + 1,
-        popUpOpened: true,
       });
     } else {
       this.setState({
         messageVisible: true,
         messageText: `Max ${capacity} persons per tour`,
-        popUpOpened: true,
       });
     }
   }
@@ -78,14 +74,12 @@ class Booking extends Component {
   showGuests = () => {
     this.setState({
       calendarVisibility: false,
-      popUpOpened: true,
     });
   }
 
   hideGuests = () => {
     this.setState({
       calendarVisibility: false,
-      popUpOpened: false,
     });
   };
 
@@ -104,10 +98,10 @@ class Booking extends Component {
     const {
       date,
       numberOfTickets,
+      placesPicked,
       messageVisible,
       messageText,
       calendarVisibility,
-      popUpOpened,
     } = this.state;
     
     let formattedDate;
@@ -116,6 +110,8 @@ class Booking extends Component {
     } else {
       formattedDate = "Dates";
     }
+
+    console.log("booking STAGE", bookingService.stage);
 
     return (
       <div>
@@ -145,7 +141,7 @@ class Booking extends Component {
               </Transition.Group>
             </Popup>
           </div>
-          <Button onClick={this.updateStageHandler}>
+          <Button disabled={date === '' || placesPicked.length === 0} onClick={this.updateStageHandler}>
             Confirm
           </Button>
         </div>
@@ -166,10 +162,8 @@ class Booking extends Component {
               </Card.Description>
             </Card.Content>
             <Card.Content extra>
-              <a>
-                <Icon name="camera retro" />
-                29 people have visited this place.
-              </a>
+              <Icon name="camera retro" />
+              29 people have visited this place.
             </Card.Content>
           </Card>
           <Card>
@@ -181,13 +175,11 @@ class Booking extends Component {
               </Card.Description>
             </Card.Content>
             <Card.Content extra>
-              <a>
-                <Icon name="camera retro" />
-                52 people have visited this place.
-              </a>
+              <Icon name="camera retro" />
+              52 people have visited this place.
             </Card.Content>
           </Card>
-          <Button fluid onClick={this.updateStageHandler}>Confirm</Button> 
+          <Button fluid disabled={date === '' || placesPicked.length === 0} onClick={this.updateStageHandler}>Confirm</Button>
         </Container>
       </div>
     );

@@ -8,7 +8,7 @@ import placesService from '../lib/placesService';
 import { injectStripe } from 'react-stripe-elements';
 import { compose } from 'recompose';
 import { CardElement } from 'react-stripe-elements';
-import { Button, Message, Card, Grid, Image, Placeholder, Container } from 'semantic-ui-react'
+import { Button, Message, Card, Image, Placeholder, Container } from 'semantic-ui-react'
 import dateFns from 'date-fns';
 import './Cart.css';
 
@@ -24,8 +24,7 @@ class Cart extends Component {
 
   updateStageHandler = () => {
     this.props.updateStage(null, 0);
-    bookingService.resetPlacesPicked();
-  }
+   }
 
   validateBooking = (responseMakeBooking) => {
     console.log("inside validate booking, responseMakeBooking:", responseMakeBooking);
@@ -147,10 +146,9 @@ class Cart extends Component {
                     base: {
                       iconColor: '#00041A',
                       color: '#00041A',
-                      lineHeight: '1.4285em',
                       fontWeight: 400,
                       fontFamily: 'Lato,"Helvetica Neue",Arial,Helvetica,sans-serif',
-                      fontSize: '1em',
+                      fontSize: '15px',
                       '::placeholder': {
                         color: '#00041A',
                       }

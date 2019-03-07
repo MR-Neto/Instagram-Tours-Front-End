@@ -15,6 +15,14 @@ class Place extends Component {
     });
   }
 
+  componentDidMount = () => {
+    const { place } = this.props;
+    const selected = bookingService.placesPicked.includes(place._id);
+    this.setState({
+      isSelected: selected,
+    })
+  }
+
   render() {  
     const { place, readOnly } = this.props;
     const { imagesURL, index } = place;

@@ -4,3 +4,11 @@
   left: 15px;
   font-size: 27px;
 }
+
+.image-icon{
+  width: 7vh;
+  height: 7vh;
+  top: 7px;
+  left: 43vw;
+  position: absolute;
+}
