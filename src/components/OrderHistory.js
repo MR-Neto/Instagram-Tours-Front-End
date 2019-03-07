@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { List } from 'semantic-ui-react';
 import tourService from '../lib/tourService';
 import { withAuth } from '../components/AuthProvider';
+import Loader from './Loader';
 
 const STATUS = {
   LOADING: 'loading',
@@ -9,7 +10,6 @@ const STATUS = {
   EMPTY: 'empty',
   LOADED: 'laoded'
 }
-
 
 class OrderHistory extends Component {
 
@@ -61,9 +61,14 @@ class OrderHistory extends Component {
     const { status } = this.state;
     switch (status) {
       case "loading":
-        return <div>Loading...</div>
+        return (
+          <Loader />
+        );
       case "empty":
-        return <div>Empty...</div>
+        return (
+          // Put something
+          <Loader />
+        );
       case "error":
         return <div>error</div>
       default:

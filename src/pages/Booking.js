@@ -187,7 +187,7 @@ class Booking extends Component {
               </a>
             </Card.Content>
           </Card>
-          <Button fluid>Confirm</Button> 
+          <Button fluid onClick={this.updateStageHandler}>Confirm</Button> 
         </Container>
       </div>
     );
