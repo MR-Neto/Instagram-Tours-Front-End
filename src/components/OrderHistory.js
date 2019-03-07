@@ -69,7 +69,7 @@ class OrderHistory extends Component {
         );
       case "empty":
         return (
-          <div>
+          <div className="empty-profile">
             <p>You have not booked with us previously. Start now!</p>
             <Link to="/book">
               <Button primary>
