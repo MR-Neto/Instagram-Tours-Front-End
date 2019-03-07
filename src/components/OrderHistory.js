@@ -6,6 +6,7 @@ import tourService from '../lib/tourService';
 import { withAuth } from '../components/AuthProvider';
 import Loader from './Loader';
 
+
 const STATUS = {
   LOADING: 'loading',
   ERROR: 'error',
@@ -27,7 +28,7 @@ class OrderHistory extends Component {
           <Card className='card-place'>
             <Image id='images-grid' src={tour.places[0].imagesURL[0]} />
             <Card.Content>
-              <Card.Description>You tour on {dateFns.format(tour.date, 'D MMM YYYY')} for {tour.users[0].numberOfTickets} people</Card.Description>
+              <Card.Description >{dateFns.format(tour.date, 'D MMM YYYY')} for {tour.users[0].numberOfTickets} people</Card.Description>
             </Card.Content>
           </Card>
         </Container>
