@@ -19,6 +19,7 @@ class Booking extends Component {
     messageVisible: false,
     messageText: "",
     calendarVisibility: false,
+    guestsVisibility: false,
   }
 
   updateSelectedDate = date => {
@@ -71,17 +72,13 @@ class Booking extends Component {
     });
   };
 
-  showGuests = () => {
+  toggleVisibilityGuests = () => {
+    const { guestsVisibility } = this.state;
     this.setState({
-      calendarVisibility: false,
+      guestsVisibility: !guestsVisibility,
+      calendarVisibility: false
     });
   }
-
-  hideGuests = () => {
-    this.setState({
-      calendarVisibility: false,
-    });
-  };
 
   componentDidMount() {
     tourService
@@ -126,8 +123,8 @@ class Booking extends Component {
               on='click'
               size='small'
               position='bottom center'
-              onClose={this.hideGuests}
-              onOpen={this.showGuests}
+              onClose={this.toggleVisibilityGuests}
+              onOpen={this.toggleVisibilityGuests}
             >
               <div className="number-of-tickets">
                 <Button basic circular icon='minus' onClick={this.decreaseNumberOfTickets} />

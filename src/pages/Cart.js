@@ -2,13 +2,14 @@ import React, { Component, Fragment } from 'react';
 import { withAuth } from '../components/AuthProvider';
 import { withRouter } from 'react-router-dom'
 import Navbar from '../components/Navbar';
+import Loader from '../components/Loader';
 import bookingService from '../lib/bookingService';
 import tourService from '../lib/tourService';
 import placesService from '../lib/placesService';
 import { injectStripe } from 'react-stripe-elements';
 import { compose } from 'recompose';
 import { CardElement } from 'react-stripe-elements';
-import { Button, Message, Card, Image, Placeholder, Container } from 'semantic-ui-react'
+import { Button, Message, Card, Image, Container } from 'semantic-ui-react'
 import dateFns from 'date-fns';
 import './Cart.css';
 
@@ -171,56 +172,7 @@ class Cart extends Component {
             {isloaded ?
               this.renderAllPlaces()
               :
-              <Fragment>
-                <Card>
-                  <Placeholder>
-                    <Placeholder.Image square />
-                  </Placeholder>
-                  <Card.Content>
-                    <Placeholder>
-                      <Placeholder.Header>
-                        <Placeholder.Line length='very short' />
-                      </Placeholder.Header>
-                    </Placeholder>
-                  </Card.Content>
-                </Card>
-                <Card>
-                  <Placeholder>
-                    <Placeholder.Image square />
-                  </Placeholder>
-                  <Card.Content>
-                    <Placeholder>
-                      <Placeholder.Header>
-                        <Placeholder.Line length='very short' />
-                      </Placeholder.Header>
-                    </Placeholder>
-                  </Card.Content>
-                </Card>
-                <Card>
-                  <Placeholder>
-                    <Placeholder.Image square />
-                  </Placeholder>
-                  <Card.Content>
-                    <Placeholder>
-                      <Placeholder.Header>
-                        <Placeholder.Line length='very short' />
-                      </Placeholder.Header>
-                    </Placeholder>
-                  </Card.Content>
-                </Card>
-                <Card>
-                  <Placeholder>
-                    <Placeholder.Image square />
-                  </Placeholder>
-                  <Card.Content>
-                    <Placeholder>
-                      <Placeholder.Header>
-                        <Placeholder.Line length='very short' />
-                      </Placeholder.Header>
-                    </Placeholder>
-                  </Card.Content>
-                </Card>
-              </Fragment>
+              <Loader numberPlaceHolders={bookingService.placesPicked.length} />
             }
           </div>
 

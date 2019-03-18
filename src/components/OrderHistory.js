@@ -24,7 +24,7 @@ class OrderHistory extends Component {
   renderBookedTours() {
     return this.state.tours.map((tour) => {
       return (
-         <Container key={tour._id}>
+        <Container key={tour._id}>
           <Card className='card-place'>
             <Image id='images-grid' src={tour.places[0].imagesURL[0]} />
             <Card.Content>
@@ -66,7 +66,10 @@ class OrderHistory extends Component {
     switch (status) {
       case "loading":
         return (
-          <Loader />
+          <div id='grid-tour'>
+            <Loader numberPlaceHolders={4} />
+          </div>
+
         );
       case "empty":
         return (

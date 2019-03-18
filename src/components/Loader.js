@@ -1,56 +1,37 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Grid, Segment, Placeholder, Container } from 'semantic-ui-react';
 
 const Loader = (props) => {
+  const { numberPlaceHolders } = props
+  const array = [];
+  for (let index = 0; index < numberPlaceHolders; index++) {
+    array.push(index);
+  }
+
   return (
-    <Container>
-      <Grid columns={2}>
-        <Grid.Column>
-          <Segment raised>
-            <Placeholder>
-              <Placeholder.Header image>
-                <Placeholder.Line />
-                <Placeholder.Line />
-              </Placeholder.Header>
-              <Placeholder.Paragraph>
-                <Placeholder.Line length='medium' />
-                <Placeholder.Line length='short' />
-              </Placeholder.Paragraph>
-            </Placeholder>
-          </Segment>
-        </Grid.Column>
+    < Fragment >
+      {
+        array.map(() => {
+          return (
+            < Container >
+              <Segment raised>
+                <Placeholder>
+                  <Placeholder.Header image>
+                    <Placeholder.Line />
+                    <Placeholder.Line />
+                  </Placeholder.Header>
+                  <Placeholder.Paragraph>
+                    <Placeholder.Line length='medium' />
+                    <Placeholder.Line length='short' />
+                  </Placeholder.Paragraph>
+                </Placeholder>
+              </Segment>
+            </Container >
 
-        <Grid.Column>
-          <Segment raised>
-            <Placeholder>
-              <Placeholder.Header image>
-                <Placeholder.Line />
-                <Placeholder.Line />
-              </Placeholder.Header>
-              <Placeholder.Paragraph>
-                <Placeholder.Line length='medium' />
-                <Placeholder.Line length='short' />
-              </Placeholder.Paragraph>
-            </Placeholder>
-          </Segment>
-        </Grid.Column>
-
-        <Grid.Column>
-          <Segment raised>
-            <Placeholder>
-              <Placeholder.Header image>
-                <Placeholder.Line />
-                <Placeholder.Line />
-              </Placeholder.Header>
-              <Placeholder.Paragraph>
-                <Placeholder.Line length='medium' />
-                <Placeholder.Line length='short' />
-              </Placeholder.Paragraph>
-            </Placeholder>
-          </Segment>
-        </Grid.Column>
-      </Grid>
-    </Container>
+          )
+        })
+      }
+    </ Fragment>
   );
 }
 
