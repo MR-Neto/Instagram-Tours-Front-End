@@ -1,3 +1,7 @@
 .topbar{
   height: 50px;
 }
+
+#form-auth form{
+  margin-bottom: 1rem;
+}

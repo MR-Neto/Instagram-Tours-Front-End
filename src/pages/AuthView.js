@@ -61,7 +61,6 @@ class FormView extends Component {
     const token1 = {
       tokenId: response.tokenId,
     }
-    // this.props.setUser();
     this.props.initGoogle(token1);
   };
 
@@ -98,7 +97,7 @@ class FormView extends Component {
         <div className="topbar">
           <Navbar />
         </div>
-        <Segment basic textAlign="center">
+        <Segment basic textAlign="center" id="form-auth">
           <GoogleLogin
             clientId={process.env.REACT_APP_GOOGLE_AUTH}
             buttonText="Login"
@@ -112,7 +111,6 @@ class FormView extends Component {
           />
           <Divider horizontal>Or</Divider>
           <AuthForm mode={mode} handleFormSubmit={this.handleFormSubmit} />
-          <Divider horizontal>Or</Divider>
           <Label onClick={this.toggleFormMode}>
             {mode === "login"
               ? "Don't have an account? Sign up!"
