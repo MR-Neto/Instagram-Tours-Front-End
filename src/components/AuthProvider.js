@@ -48,6 +48,7 @@ export default class AuthProvider extends Component {
   loginUser = (body) => {
     return authService.login(body)
       .then(({ data }) => {
+        console.log("log in front end",data);
         this.setUser(data);
         return data;
       })

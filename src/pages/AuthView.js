@@ -18,42 +18,30 @@ class FormView extends Component {
     messageText: ""
   };
 
-  handleFormSubmit = (formInput) => {
+  handleFormSubmit = async (formInput) => {
     const { mode } = this.state;
-    if (mode === "signup") {
-      const { username, password, name, phoneNumber } = formInput;
-      this.props.signup({ username, password, name, phoneNumber })
-        .then(signupResponse => {
-          if (signupResponse !== "success") {
-            this.setState({
-              messageVisible: true,
-              messageText: signupResponse.code,
-            });
-          }
-        })
-        .catch(error => {
-          this.setState({
-            messageVisible: true,
-            messageText: error,
-          });
+    const { login, signup } = this.props;
+
+    const { username, password, name, phoneNumber } = formInput;
+
+    try {
+      const response = ((mode === "signup") ?
+        await signup({ username, password, name, phoneNumber }):
+        await login({ username, password })
+      );
+    
+      if (response !== "success") {
+        this.setState({
+          messageVisible: true,
+          messageText: response.code,
         });
-    } else {
-      const { username, password } = formInput;
-      this.props.login({ username, password })
-        .then(loginResponse => {
-          if (loginResponse !== "success") {
-            this.setState({
-              messageVisible: true,
-              messageText: loginResponse.code,
-            });
-          }
-        })
-        .catch(error => {
-          this.setState({
-            messageVisible: true,
-            messageText: error,
-          });
-        });
+      }
+    }
+    catch (error) {
+      this.setState({
+        messageVisible: true,
+        messageText: error.response.data.code,
+      });
     }
   };
 
@@ -102,7 +90,7 @@ class FormView extends Component {
             clientId={process.env.REACT_APP_GOOGLE_AUTH}
             buttonText="Login"
             onSuccess={this.responseGoogle}
-            onFailure={()=>{
+            onFailure={() => {
               this.setState({
                 messageVisible: true,
                 messageText: "Google permission denied"

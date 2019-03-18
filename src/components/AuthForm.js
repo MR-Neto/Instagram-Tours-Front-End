@@ -28,11 +28,11 @@ class AuthForm extends Component {
     } = this.state;
 
     if (mode === "login" && username && password) {
-      handleFormSubmit(this.state);
+      handleFormSubmit({ username, password });
     }
 
     if (mode === "signup" && username && password && phoneNumber && name) {
-      handleFormSubmit(this.state);
+      handleFormSubmit({ username, password, phoneNumber, name });
     }
 
     if (!username) {
