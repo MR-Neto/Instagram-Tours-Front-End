@@ -139,13 +139,13 @@ place = {
 
 The url to your repository and to your deployed project
 
-[Client repository Link](http://github.com)
-[Server repository Link](http://github.com)
+[Client repository Link](https://github.com/MR-Neto/Instagram-Tours-Front-End)
+[Server repository Link](https://github.com/MR-Neto/Instagram-Tours-Back-End)
 
-[Deploy Link](http://heroku.com)
+[Deploy Link](https://instagram-tours-1551619649281.firebaseapp.com/)
 
 ### Slides
 
 The url to your presentation slides
 
-[Slides Link](http://slides.com)
+[Slides Link](https://docs.google.com/presentation/d/1jLLrX24cXsbu9hk_HjGyGu2SK-wrGDfZ3f2jGe9sBS4/edit?usp=sharing)
