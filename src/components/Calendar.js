@@ -3,15 +3,17 @@ import dateFns from 'date-fns';
 import './Calendar.css';
 import { Transition } from 'semantic-ui-react';
 import tourService from '../lib/tourService';
+import { connect } from 'react-redux'
+import { setTourBooking } from '../lib/Booking/actions'
 
 class Calendar extends Component {
-  
+
   state = {
     currentMonth: new Date(),
     selectedDate: new Date(),
     tours: [],
   };
-  
+
   componentDidMount() {
     tourService.getAllTours()
       .then((tours) => {
@@ -83,50 +85,50 @@ class Calendar extends Component {
         formattedDate = dateFns.format(day, dateFormat);
         // Find the corresponding day in our tours
         const foundTour = this.findMatchingTourByDate(day);
-        if(foundTour) {
+        if (foundTour) {
           const cloneDay = day;
-          days.push(        
-              <div
-                className={`col cell ${
-                
-                  // On current month display, disable days from past and next month
-                  !dateFns.isSameMonth(day, monthStart)
-                    ? 'disabled'
-                    // Disable all past days
-                    : dateFns.isBefore(day, dateFns.startOfToday(new Date())) ? 'disabled'
+          days.push(
+            <div
+              className={`col cell ${
+
+                // On current month display, disable days from past and next month
+                !dateFns.isSameMonth(day, monthStart)
+                  ? 'disabled'
+                  // Disable all past days
+                  : dateFns.isBefore(day, dateFns.startOfToday(new Date())) ? 'disabled'
                     : foundTour && foundTour.isFull ? 'unavailable'
-                    : dateFns.isSameDay(day, selectedDate) ? 'selected'
-                    : foundTour && !foundTour.isFull ? 'joinable' : 'available'
+                      : dateFns.isSameDay(day, selectedDate) ? 'selected'
+                        : foundTour && !foundTour.isFull ? 'joinable' : 'available'
                 }`}
-                key={day}
-                onClick={() => {
-                  this.onDateClick(dateFns.parse(cloneDay));
-                }}
-              >
-                <div className="number">{formattedDate}</div>
-              </div>          
+              key={day}
+              onClick={() => {
+                this.onDateClick(dateFns.parse(cloneDay));
+              }}
+            >
+              <div className="number">{formattedDate}</div>
+            </div>
           );
 
         } else {
           const cloneDay = day;
-          days.push(        
-              <div
-                className={`col cell ${
-                  // On current month display, disable days from past and next month
-                  !dateFns.isSameMonth(day, monthStart)
-                    ? 'disabled'
-                    // Disable all past days
-                    : dateFns.isBefore(day, dateFns.startOfToday(new Date())) ? 'disabled'
+          days.push(
+            <div
+              className={`col cell ${
+                // On current month display, disable days from past and next month
+                !dateFns.isSameMonth(day, monthStart)
+                  ? 'disabled'
+                  // Disable all past days
+                  : dateFns.isBefore(day, dateFns.startOfToday(new Date())) ? 'disabled'
                     : dateFns.isSameDay(day, selectedDate) ? 'selected'
-                    : 'available'
+                      : 'available'
                 }`}
-                key={day}
-                onClick={() => {
-                  this.onDateClick(dateFns.parse(cloneDay));
-                }}
-              >
-                <div className="number">{formattedDate}</div>
-              </div>          
+              key={day}
+              onClick={() => {
+                this.onDateClick(dateFns.parse(cloneDay));
+              }}
+            >
+              <div className="number">{formattedDate}</div>
+            </div>
           );
         }
         day = dateFns.addDays(day, 1);
@@ -143,15 +145,17 @@ class Calendar extends Component {
 
   onDateClick = day => {
     const foundTour = this.findMatchingTourByDate(day);
-    if(foundTour && !foundTour.isFull) {
+    if (foundTour && !foundTour.isFull) {
       this.setState({
         selectedDate: day
       });
+      this.props.setTourBooking({ field:'date', value: day });
       this.props.updateSelectedDateHandler(day);
-    } else if(!foundTour) {
+    } else if (!foundTour) {
       this.setState({
         selectedDate: day
       });
+      this.props.setTourBooking({ field:'date', value: day });
       this.props.updateSelectedDateHandler(day);
     }
   };
@@ -174,11 +178,18 @@ class Calendar extends Component {
         {this.renderHeader()}
         {this.renderDays()}
         <Transition.Group animation='fade' duration={500}>
-          { this.renderCells()}    
-        </Transition.Group> 
+          {this.renderCells()}
+        </Transition.Group>
       </div>
     )
   }
 }
 
-export default Calendar;
+
+const mapDispatchToProps = {
+  setTourBooking,
+}
+
+
+
+export default connect(null, mapDispatchToProps)(Calendar);

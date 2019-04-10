@@ -3,7 +3,7 @@ import { withAuth } from '../components/AuthProvider';
 import { withRouter } from 'react-router-dom'
 import Navbar from '../components/Navbar';
 import Loader from '../components/Loader';
-import bookingService from '../lib/bookingService';
+import bookingService from '../lib/Booking/bookingService';
 import tourService from '../lib/tourService';
 import placesService from '../lib/placesService';
 import { injectStripe } from 'react-stripe-elements';

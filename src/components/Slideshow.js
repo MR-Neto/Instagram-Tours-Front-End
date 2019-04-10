@@ -3,7 +3,7 @@ import './Slideshow.scss';
 import Place from './Place';
 import { Button, Icon } from 'semantic-ui-react';
 import placesService from '../lib/placesService';
-import bookingService from '../lib/bookingService';
+import bookingService from '../lib/Booking/bookingService';
 
 class Slideshow extends Component {
 

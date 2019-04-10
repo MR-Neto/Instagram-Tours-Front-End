@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { Button, Message, Transition, Divider, Popup, Card, Container, Icon, Image } from 'semantic-ui-react';
+import { Button, Message, Transition, Divider, Popup } from 'semantic-ui-react';
 import Navbar from '../components/Navbar';
 import { withAuth } from '../components/AuthProvider';
-import bookingService from '../lib/bookingService';
+import bookingService from '../lib/Booking/bookingService';
 import tourService from '../lib/tourService';
 import Calendar from '../components/Calendar';
 import Slideshow from '../components/Slideshow';
