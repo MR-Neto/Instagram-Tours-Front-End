@@ -9,11 +9,13 @@ import Slideshow from '../components/Slideshow';
 import dateFns from 'date-fns';
 import './Booking.scss';
 import Features from '../components/Features';
+import { connect } from 'react-redux'
+import { setTourBooking } from '../lib/Booking/actions'
+
 
 class Booking extends Component {
   state = {
     date: bookingService.date,
-    numberOfTickets: bookingService.numberOfTickets,
     placesPicked: bookingService.placesPicked,
     tours: [],
     capacity: 4,
@@ -30,20 +32,18 @@ class Booking extends Component {
   };
 
   decreaseNumberOfTickets = () => {
-    const { numberOfTickets } = this.state;
+    const { numberOfTickets, setTourBooking } = this.props;
     if (numberOfTickets > 1) {
-      this.setState({
-        numberOfTickets: numberOfTickets - 1,
-      });
+      setTourBooking({ field:'numberOfTickets', value: numberOfTickets-1 });
     }
   }
 
   increaseNumberOfTickets = () => {
-    const { numberOfTickets, capacity } = this.state;
+    const { capacity } = this.state;
+    const { numberOfTickets, setTourBooking } = this.props;
+
     if (numberOfTickets < capacity) {
-      this.setState({
-        numberOfTickets: numberOfTickets + 1,
-      });
+      setTourBooking({ field:'numberOfTickets', value: numberOfTickets+1 });
     } else {
       this.setState({
         messageVisible: true,
@@ -94,14 +94,21 @@ class Booking extends Component {
 
   render() {
     const {
-      date,
-      numberOfTickets,
-      placesPicked,
       messageVisible,
       messageText,
       calendarVisibility,
     } = this.state;
     
+    const {
+      date,
+      placesPicked,
+    } = this.props;
+
+    const {
+      numberOfTickets
+    } = this.props;
+
+
     let formattedDate;
     if (date) {
       formattedDate = dateFns.format(date, 'D MMM');
@@ -155,4 +162,16 @@ class Booking extends Component {
   }
 }
 
-export default withAuth(Booking);
+const mapStateToProps = (state) => {
+  return {
+    numberOfTickets: state.numberOfTickets,
+    date: state.date,
+    placesPicked:state.placesPicked
+  }
+}
+
+const mapDispatchToProps = {
+  setTourBooking,
+}
+
+export default withAuth(connect(mapStateToProps,mapDispatchToProps)(Booking));

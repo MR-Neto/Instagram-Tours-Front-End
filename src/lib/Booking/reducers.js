@@ -24,10 +24,6 @@ export default function reducer(state = initialStore, action) {
         ...state,
         [action.payload.field]: action.payload.value,
       };
-
-    case types.SET_TICKETS:
-      return action.payload;
-
     case types.TOGGLE_PLACE:
       return togglePlacesPicked(action.payload, state);
 
